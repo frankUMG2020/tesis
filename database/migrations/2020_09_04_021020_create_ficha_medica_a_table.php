@@ -21,6 +21,8 @@ class CreateFichaMedicaATable extends Migration
             $table->longText('foto')->nullable();
             $table->string('remitido')->nullable();
             $table->string('observacion', 500)->nullable();
+            $table->string('codigo_epps')->nullable();
+            $table->string('cui')->nullable();
 
             $table->unsignedBigInteger('tipo_sangre_id');
             $table->foreign('tipo_sangre_id')->references('id')->on('tipo_sangre');
