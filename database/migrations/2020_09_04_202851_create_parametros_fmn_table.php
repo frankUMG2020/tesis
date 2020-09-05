@@ -27,6 +27,9 @@ class CreateParametrosFmnTable extends Migration
             $table->longText('parametro_once')->nullable();
             $table->longText('parametro_doce')->nullable();
             $table->longText('parametro_trece')->nullable();
+            
+            $table->unsignedBigInteger('historial_fmn_id');
+            $table->foreign('historial_fmn_id')->references('id')->on('historial_fmn');
             $table->timestamps();
         });
     }

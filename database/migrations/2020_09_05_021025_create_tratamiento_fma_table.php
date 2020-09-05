@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMotivoFmaTable extends Migration
+class CreateTratamientoFmaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateMotivoFmaTable extends Migration
      */
     public function up()
     {
-        Schema::create('motivo_fma', function (Blueprint $table) {
+        Schema::create('tratamiento_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('descripcion');
 
-            $table->unsignedBigInteger('general_fma_id');
-            $table->foreign('general_fma_id')->references('id')->on('general_fma');
+            $table->unsignedBigInteger('parametros_fma_id');
+            $table->foreign('parametros_fma_id')->references('id')->on('parametros_fma');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateMotivoFmaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('motivo_fma');
+        Schema::dropIfExists('tratamiento_fma');
     }
 }

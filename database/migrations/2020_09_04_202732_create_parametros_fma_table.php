@@ -27,6 +27,9 @@ class CreateParametrosFmaTable extends Migration
             $table->longText('parametro_once')->nullable();
             $table->longText('parametro_doce')->nullable();
             $table->longText('parametro_trece')->nullable();
+
+            $table->unsignedBigInteger('historial_fma_id');
+            $table->foreign('historial_fma_id')->references('id')->on('historial_fma');
             $table->timestamps();
         });
     }

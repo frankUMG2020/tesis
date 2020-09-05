@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAntecedenteFmaTable extends Migration
+class CreateHistorialFmaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateAntecedenteFmaTable extends Migration
      */
     public function up()
     {
-        Schema::create('antecedente_fma', function (Blueprint $table) {
+        Schema::create('historial_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('descripcion');
-
-            $table->unsignedBigInteger('general_fma_id');
-            $table->foreign('general_fma_id')->references('id')->on('general_fma');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateAntecedenteFmaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('antecedente_fma');
+        Schema::dropIfExists('historial_fma');
     }
 }

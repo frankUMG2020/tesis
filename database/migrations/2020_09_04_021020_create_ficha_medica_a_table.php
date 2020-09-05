@@ -27,6 +27,9 @@ class CreateFichaMedicaATable extends Migration
             $table->unsignedBigInteger('tipo_sangre_id');
             $table->foreign('tipo_sangre_id')->references('id')->on('tipo_sangre');
 
+            $table->unsignedBigInteger('persona_id');
+            $table->foreign('persona_id')->references('id')->on('persona');
+
             $table->timestamps();
         });
     }

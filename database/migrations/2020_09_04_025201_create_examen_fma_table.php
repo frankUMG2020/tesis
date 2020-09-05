@@ -15,8 +15,8 @@ class CreateExamenFmaTable extends Migration
     {
         Schema::create('examen_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('general_fma_id');
-            $table->foreign('general_fma_id')->references('id')->on('general_fma');
+            $table->unsignedBigInteger('historial_fma_id');
+            $table->foreign('historial_fma_id')->references('id')->on('historial_fma');
 
             $table->unsignedBigInteger('examen_id');
             $table->foreign('examen_id')->references('id')->on('examen');

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Models\escuela\catalogo;
+namespace App\Models\clinica\catalogo;
 
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Municipio extends Model
+class Departamento extends Model
 {
     use SearchableTrait;
 
     protected $searchable = [
         'columns' => [
-            'municipio.nombre_completo' => 20,
+            'departamento.nombre' => 10,
         ]
     ];
 
-    protected $table = 'municipio';
+    protected $table = 'departamento';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +23,6 @@ class Municipio extends Model
      */
 
     protected $fillable = [
-        'nombre', 'nombre_completo', 'departamento_id'
+        'nombre'
     ];
 }
