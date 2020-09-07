@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEvolucionFmaTable extends Migration
+class Createe_t_fmaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEvolucionFmaTable extends Migration
      */
     public function up()
     {
-        Schema::create('evolucion_fma', function (Blueprint $table) {
+        Schema::create('e_t_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('descripcion');
 
@@ -30,6 +30,6 @@ class CreateEvolucionFmaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evolucion_fma');
+        Schema::dropIfExists('e_t_fma');
     }
 }

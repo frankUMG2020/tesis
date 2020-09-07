@@ -47,4 +47,14 @@ class FichaMedicaA extends Model
     {
         return $this->hasMany(TelefonoFMA::class, 'ficha_medica_a_id', 'id');
     }
+
+    public function direcciones()
+    {
+        return $this->hasMany(DireccionFMA::class, 'ficha_medica_a_id', 'id');
+    }
+
+    public function historial_fma()
+    {
+        return $this->hasMany(HistorialFMA::class, 'ficha_medica_a_id', 'id');
+    }
 }

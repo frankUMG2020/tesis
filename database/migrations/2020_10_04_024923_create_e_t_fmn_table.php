@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTratamientoFmaTable extends Migration
+class Createe_t_fmnTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTratamientoFmaTable extends Migration
      */
     public function up()
     {
-        Schema::create('tratamiento_fma', function (Blueprint $table) {
+        Schema::create('e_t_fmn', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('descripcion');
+            $table->longText('evolucion');
+            $table->longText('tratamiento');
 
-            $table->unsignedBigInteger('parametros_fma_id');
-            $table->foreign('parametros_fma_id')->references('id')->on('parametros_fma');
+            $table->unsignedBigInteger('parametros_fmn_id');
+            $table->foreign('parametros_fmn_id')->references('id')->on('parametros_fmn');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateTratamientoFmaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tratamiento_fma');
+        Schema::dropIfExists('e_t_fmn');
     }
 }
