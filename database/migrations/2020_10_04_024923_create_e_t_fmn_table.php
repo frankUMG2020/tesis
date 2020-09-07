@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Createe_t_fmnTable extends Migration
+class CreateETFmnTable extends Migration
 {
     /**
      * Run the migrations.

@@ -14,8 +14,5 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
-Route::resource('bimestre', 'escuela\catalogo\BimestreController');
-Route::resource('carrera', 'escuela\catalogo\CarreraController');
-Route::resource('curso', 'escuela\catalogo\CursoController');
-Route::resource('grado', 'escuela\catalogo\GradoController');
-Route::resource('seccion', 'escuela\catalogo\SeccionController');
+
+Route::resource('alimentacion', 'clinica\catalogo\AlimentacionController');
