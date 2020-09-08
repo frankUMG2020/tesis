@@ -15,7 +15,9 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function index()
     {
-        //
+        $values = ConfiguracionEnfermedad::all();
+        
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,9 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = ConfiguracionEnfermedad::create($request->all());
+        
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +74,10 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function update(Request $request, ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        //
+        $configuracionEnfermedad->nombre = $request->nombre;
+        $configuracionEnfermedad->save();
+
+        return response()->json(["Registro" => $configuracionEnfermedad, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +88,8 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function destroy(ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        //
+        $configuracionEnfermedad->delete();
+
+        return response()->json(["Registro" => $configuracionEnfermedad, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

@@ -15,7 +15,9 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        //
+        $values = Municipio::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,9 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Municipio::create($request->all());
+
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +74,11 @@ class MunicipioController extends Controller
      */
     public function update(Request $request, Municipio $municipio)
     {
-        //
+        $municipio->nombre = $request->nombre;
+        $municipio->departamento_id = $request->departamento_id;
+        $municipio->save();
+
+        return response()->json(["Registro" => $municipio, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +89,8 @@ class MunicipioController extends Controller
      */
     public function destroy(Municipio $municipio)
     {
-        //
+        $municipio->delete();
+
+        return response()->json(["Registro" => $municipio, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

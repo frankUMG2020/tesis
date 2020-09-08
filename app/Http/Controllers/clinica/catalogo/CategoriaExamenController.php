@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clinica\catalogo;
 
 use App\Http\Controllers\Controller;
 use App\Models\clinica\catalogo\CategoriaExamen;
+use App\Models\clinica\catalogo\Examen;
 use Illuminate\Http\Request;
 
 class CategoriaExamenController extends Controller
@@ -15,7 +16,9 @@ class CategoriaExamenController extends Controller
      */
     public function index()
     {
-        //
+        $values = Examen::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +39,9 @@ class CategoriaExamenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Examen::create($request->all());
+
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +75,10 @@ class CategoriaExamenController extends Controller
      */
     public function update(Request $request, CategoriaExamen $categoriaExamen)
     {
-        //
+        $categoriaExamen->nombre = $request->nombre;
+        $categoriaExamen->save();
+
+        return response()->json(["Registro" => $categoriaExamen, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +89,8 @@ class CategoriaExamenController extends Controller
      */
     public function destroy(CategoriaExamen $categoriaExamen)
     {
-        //
+        $categoriaExamen->delete();
+        
+        return response()->json(["Registro" => $categoriaExamen, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

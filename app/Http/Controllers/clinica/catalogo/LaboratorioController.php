@@ -15,7 +15,9 @@ class LaboratorioController extends Controller
      */
     public function index()
     {
-        //
+        $values = Laboratorio::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,8 @@ class LaboratorioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Laboratorio::create($request->all());
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +73,12 @@ class LaboratorioController extends Controller
      */
     public function update(Request $request, Laboratorio $laboratorio)
     {
-        //
+        $laboratorio->nombre = $request->nombre;
+        $laboratorio->direccion = $request->direccion;
+        $laboratorio->telefono = $request->telefono;
+        $laboratorio->save();
+        
+        return response()->json(["Registro" => $laboratorio, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +89,8 @@ class LaboratorioController extends Controller
      */
     public function destroy(Laboratorio $laboratorio)
     {
-        //
+        $laboratorio->delete();
+
+        return response()->json(["Registro" => $laboratorio, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

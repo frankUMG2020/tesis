@@ -15,7 +15,9 @@ class ExamenController extends Controller
      */
     public function index()
     {
-        //
+        $values = Examen::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,9 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Examen::create($request->all());
+
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +74,12 @@ class ExamenController extends Controller
      */
     public function update(Request $request, Examen $examen)
     {
-        //
+        $examen->nombre = $request->nombre;
+        $examen->laboratorio_id = $request->laboratorio_id;
+        $examen->categoria_examen_id = $request->categoria_examen_id;
+        $examen->save();
+        
+        return response()->json(["Registro" => $examen, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +90,8 @@ class ExamenController extends Controller
      */
     public function destroy(Examen $examen)
     {
-        //
+        $examen->delete();
+
+        return response()->json(["Registro" => $examen, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

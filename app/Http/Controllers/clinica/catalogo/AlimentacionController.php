@@ -17,7 +17,7 @@ class AlimentacionController extends Controller
     {
         $values = Alimentacion::all();
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades"]);
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -40,7 +40,7 @@ class AlimentacionController extends Controller
     {
         $data = Alimentacion::create($request->all());
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades"]);
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -77,7 +77,7 @@ class AlimentacionController extends Controller
         $alimentacion->nombre = $request->nombre;
         $alimentacion->save();
 
-        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades"]);
+        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -90,6 +90,6 @@ class AlimentacionController extends Controller
     {
         $alimentacion->delete();
 
-        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades"]);
+        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

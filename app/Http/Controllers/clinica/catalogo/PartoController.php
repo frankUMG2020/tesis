@@ -15,7 +15,9 @@ class PartoController extends Controller
      */
     public function index()
     {
-        //
+        $values = Parto::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,9 @@ class PartoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Parto::create($request->all());
+
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +74,10 @@ class PartoController extends Controller
      */
     public function update(Request $request, Parto $parto)
     {
-        //
+        $parto->nombre = $request->nombre;
+        $parto->save();
+
+        return response()->json(["Registro" => $parto, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +88,8 @@ class PartoController extends Controller
      */
     public function destroy(Parto $parto)
     {
-        //
+        $parto->delete();
+
+        return response()->json(["Registro" => $parto, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

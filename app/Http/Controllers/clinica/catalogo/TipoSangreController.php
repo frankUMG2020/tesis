@@ -15,7 +15,9 @@ class TipoSangreController extends Controller
      */
     public function index()
     {
-        //
+        $values = TipoSangre::all();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,9 @@ class TipoSangreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = TipoSangre::create($request->all());
+
+        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +74,10 @@ class TipoSangreController extends Controller
      */
     public function update(Request $request, TipoSangre $tipoSangre)
     {
-        //
+        $tipoSangre->nombre = $request->nombre;
+        $tipoSangre->save();
+
+        return response()->json(["Registro" => $tipoSangre, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +88,8 @@ class TipoSangreController extends Controller
      */
     public function destroy(TipoSangre $tipoSangre)
     {
-        //
+        $tipoSangre->delete();
+
+        return response()->json(["Registro" => $tipoSangre, "Mensaje" => "Felicidades eliminaste"]);
     }
 }
