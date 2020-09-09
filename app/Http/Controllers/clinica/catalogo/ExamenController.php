@@ -15,7 +15,7 @@ class ExamenController extends Controller
      */
     public function index()
     {
-        $values = Examen::all();
+        $values = Examen::with('laboratorio', 'categoria_examen')->get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,13 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Examen::create($request->all());
+        $insert = new Examen();
+        $insert->nombre = $request->nombre;
+        $insert->laboratorio_id = $request->laboratorio_id;
+        $insert->categoria_examen_id = $request->categoria_examen_id;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
