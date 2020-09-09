@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,14 +20,14 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('alimentacion', 'clinica\catalogo\AlimentacionController');
-Route::resource('categoria_examen','clinica\catalogo\CategoriaExamenController');
-Route::resource('configuracion_enfermedad', 'clinica\catalogo\ConfiguracionEnfermedadController');
+Route::resource('categoriaExamen','clinica\catalogo\CategoriaExamenController');
+Route::resource('configuracionEnfermedad', 'clinica\catalogo\ConfiguracionEnfermedadController');
 Route::resource('departamento','clinica\catalogo\DepartamentoController');
 Route::resource('examen','clinica\catalogo\ExamenController');
 Route::resource('laboratorio','clinica\catalogo\LaboratorioController');
 Route::resource('municipio','clinica\catalogo\MunicipioController');
 Route::resource('parto','clinica\catalogo\PartoController');
-Route::resource('tipo_sangre','clinica\catalogo\TipoSangreController');
+Route::resource('tipoSangre','clinica\catalogo\TipoSangreController');
 Route::resource('vacuna','clinica\catalogo\VacunaController');
 
 ?>
