@@ -14,7 +14,7 @@ class Examen extends Model
      */
 
     protected $fillable = [
-        'nombre','laboratio_id','categoria_examen_id'
+        'nombre', 'laboratorio_id','categoria_examen_id'
     ];
 
     public function laboratorio()

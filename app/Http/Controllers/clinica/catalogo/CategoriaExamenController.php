@@ -4,7 +4,6 @@ namespace App\Http\Controllers\clinica\catalogo;
 
 use App\Http\Controllers\Controller;
 use App\Models\clinica\catalogo\CategoriaExamen;
-use App\Models\clinica\catalogo\Examen;
 use Illuminate\Http\Request;
 
 class CategoriaExamenController extends Controller
@@ -16,7 +15,7 @@ class CategoriaExamenController extends Controller
      */
     public function index()
     {
-        $values = Examen::all();
+        $values = CategoriaExamen::with('examenes')->orderBy('nombre')->get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -39,9 +38,11 @@ class CategoriaExamenController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Examen::create($request->all());
+        $insert = new CategoriaExamen();
+        $insert->nombre = $request->nombre;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

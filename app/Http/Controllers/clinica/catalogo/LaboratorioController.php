@@ -38,8 +38,13 @@ class LaboratorioController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Laboratorio::create($request->all());
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        $insert = new Laboratorio();
+        $insert->nombre = $request->nombre;
+        $insert->direccion = $request->direccion;
+        $insert->telefono = $request->telefono;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

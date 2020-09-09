@@ -15,7 +15,7 @@ class AlimentacionController extends Controller
      */
     public function index()
     {
-        $values = Alimentacion::all();
+        $values = Alimentacion::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,11 @@ class AlimentacionController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Alimentacion::create($request->all());
+        $insert = new Alimentacion();
+        $insert->nombre = $request->nombre;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

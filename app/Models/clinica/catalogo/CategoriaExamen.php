@@ -16,4 +16,9 @@ class CategoriaExamen extends Model
     protected $fillable = [
         'nombre'
     ];
+
+    public function examenes()
+    {
+        return $this->hasMany(Examen::class, 'categoria_examen_id', 'id')->orderBy('nombre');
+    }
 }
