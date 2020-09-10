@@ -15,7 +15,9 @@ class EnfermedadHistorialController extends Controller
      */
     public function index()
     {
-        //
+        $values = EnfermedadHistorial::with('configuracion_enfermedad')->get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,13 @@ class EnfermedadHistorialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new EnfermedadHistorial();
+        $insert->cantidad = $request->cantidad;
+        $insert->historial_fmn_id = $request->historial_fmn_id;
+        $insert->configuracion_enfermedad_id = $request->configuracion_enfermedad_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +78,12 @@ class EnfermedadHistorialController extends Controller
      */
     public function update(Request $request, EnfermedadHistorial $enfermedadHistorial)
     {
-        //
+        $enfermedadHistorial->cantidad = $request->cantidad;
+        $enfermedadHistorial->historial_fmn_id = $request->historial_fmn_id;
+        $enfermedadHistorial->configuracion_enfermedad_id = $request->configuracion_enfermedad_id;
+        $enfermedadHistorial->save();
+
+        return response()->json(["Registro" => $enfermedadHistorial, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +94,8 @@ class EnfermedadHistorialController extends Controller
      */
     public function destroy(EnfermedadHistorial $enfermedadHistorial)
     {
-        //
+        $enfermedadHistorial->delete();
+
+        return response()->json(["Registro" => $enfermedadHistorial, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

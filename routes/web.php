@@ -28,5 +28,9 @@ Route::resource('municipio','clinica\catalogo\MunicipioController');
 Route::resource('parto','clinica\catalogo\PartoController');
 Route::resource('tipoSangre','clinica\catalogo\TipoSangreController');
 Route::resource('vacuna','clinica\catalogo\VacunaController');
-
+Route::resource('direccionFMA', 'clinica\sistema\DireccionFMAController');
+Route::resource('direccionFMN', 'clinica\sistema\DireccionFMNController');
+Route::resource('enfermedadHistorial', 'clinica\sistema\EnfermedadHistorialController');
+Route::resource('examenFMA', 'clinica\sistema\ExamenFMAController');
+Route::resource('examenFMN', 'clinica\sistema\ExmaenFMNController');
 ?>

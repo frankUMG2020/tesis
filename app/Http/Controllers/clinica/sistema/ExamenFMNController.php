@@ -15,7 +15,9 @@ class ExamenFMNController extends Controller
      */
     public function index()
     {
-        //
+        $values = ExamenFMN::get();
+
+        return response()->json(['Registro nuevo' => $values, 'Mensaje' => 'Felicidades consultastes']);
     }
 
     /**
@@ -36,7 +38,12 @@ class ExamenFMNController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new ExamenFMN();
+        $insert->historial_fmn_id = $request->historial_fmn_id;
+        $insert->examen_id = $request->examen_id;
+        $insert->save();
+        
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
     }
 
     /**
@@ -70,7 +77,11 @@ class ExamenFMNController extends Controller
      */
     public function update(Request $request, ExamenFMN $examenFMN)
     {
-        //
+        $examenFMN->historial_fmn_id = $request->historial_fmn_id;
+        $examenFMN->examen_id = $request->examen_id;
+        $examenFMN->save();
+
+        return response()->json(["Registro" => $examenFMN, "Mensaje" => "Felicidades Actualizaste"]);
     }
 
     /**
@@ -81,6 +92,8 @@ class ExamenFMNController extends Controller
      */
     public function destroy(ExamenFMN $examenFMN)
     {
-        //
+        $examenFMN->delete();
+
+        return response()->json(["Registro" => $examenFMN, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

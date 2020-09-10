@@ -15,7 +15,7 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        $values = Departamento::all();
+        $values = Departamento::orderBy('nombre')->get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,11 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Departamento::create($request->all());
+        $insert = new Departamento();
+        $insert->nombre = $request->nombre;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

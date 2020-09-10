@@ -15,7 +15,7 @@ class PartoController extends Controller
      */
     public function index()
     {
-        $values = Parto::all();
+        $values = Parto::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,11 @@ class PartoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Parto::create($request->all());
+        $insert = new Parto();
+        $insert->nombre = $request->nombre;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

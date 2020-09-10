@@ -15,7 +15,7 @@ class LaboratorioController extends Controller
      */
     public function index()
     {
-        $values = Laboratorio::all();
+        $values = Laboratorio::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }

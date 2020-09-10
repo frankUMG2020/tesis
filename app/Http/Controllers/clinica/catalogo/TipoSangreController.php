@@ -15,7 +15,7 @@ class TipoSangreController extends Controller
      */
     public function index()
     {
-        $values = TipoSangre::all();
+        $values = TipoSangre::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,11 @@ class TipoSangreController extends Controller
      */
     public function store(Request $request)
     {
-        $data = TipoSangre::create($request->all());
+        $insert = new TipoSangre();
+        $insert->nombre = $request->nombre;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

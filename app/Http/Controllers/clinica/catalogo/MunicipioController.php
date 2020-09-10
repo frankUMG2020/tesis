@@ -15,7 +15,7 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $values = Municipio::all();
+        $values = Municipio::with('departamento')->orderby('nombre')->get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,12 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Municipio::create($request->all());
+        $insert = new Municipio();
+        $insert->nombre = $request->nombre;
+        $insert->departamento_id = $request->departamento_id;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

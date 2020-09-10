@@ -15,7 +15,7 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function index()
     {
-        $values = ConfiguracionEnfermedad::all();
+        $values = ConfiguracionEnfermedad::get();
         
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,11 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ConfiguracionEnfermedad::create($request->all());
+        $insert = new ConfiguracionEnfermedad();
+        $insert->nombre = $request->nombre;
+        $insert->save();
         
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**

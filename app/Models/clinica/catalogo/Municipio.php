@@ -19,6 +19,6 @@ class Municipio extends Model
 
     public function departamento()
     {
-        return $this->belongsTo(Departamento::class, 'departamento_id', 'id');
+        return $this->belongsTo(Departamento::class, 'departamento_id', 'id')->orderby('nombre');
     }
 }

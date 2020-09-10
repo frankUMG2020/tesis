@@ -15,7 +15,7 @@ class VacunaController extends Controller
      */
     public function index()
     {
-        $values = Vacuna::all();
+        $values = Vacuna::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
@@ -38,9 +38,12 @@ class VacunaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Vacuna::create($request->all());
+        $insert = new Vacuna();
+        $insert->nombre = $request->nombre;
+        $insert->dosis = $request->dosis;
+        $insert->save();
 
-        return response()->json(["Registro" => $data, "Mensaje" => "Felicidades insertaste"]);
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
