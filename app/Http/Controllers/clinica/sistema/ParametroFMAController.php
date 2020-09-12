@@ -15,7 +15,9 @@ class ParametroFMAController extends Controller
      */
     public function index()
     {
-        //
+        $values = ParametroFMA::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,23 @@ class ParametroFMAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new ParametroFMA();
+        $insert->parametro_uno = $request->parametro_uno;
+        $insert->parametro_dos = $request->parametro_dos;
+        $insert->parametro_tres = $request->parametro_tres;
+        $insert->parametro_cuatro = $request->parametro_cuatro;
+        $insert->parametro_seis = $request->parametro_seis;
+        $insert->parametro_siete = $request->parametro_siete;
+        $insert->parametro_ocho = $request->parametro_ocho;
+        $insert->parametro_nueve = $request->parametro_nueve;
+        $insert->parametro_diez = $request->parametro_diez;
+        $insert->parametro_once = $request->parametro_once;
+        $insert->parametro_doce = $request->parametro_doce;
+        $insert->parametro_trece = $request->parametro_trece;
+        $insert->historial_fma_id = $request->historial_fma_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +88,22 @@ class ParametroFMAController extends Controller
      */
     public function update(Request $request, ParametroFMA $parametroFMA)
     {
-        //
+        $parametroFMA->parametro_uno = $request->parametro_uno;
+        $parametroFMA->parametro_dos = $request->parametro_dos;
+        $parametroFMA->parametro_tres = $request->parametro_tres;
+        $parametroFMA->parametro_cuatro = $request->parametro_cuatro;
+        $parametroFMA->parametro_seis = $request->parametro_seis;
+        $parametroFMA->parametro_siete = $request->parametro_siete;
+        $parametroFMA->parametro_ocho = $request->parametro_ocho;
+        $parametroFMA->parametro_nueve = $request->parametro_nueve;
+        $parametroFMA->parametro_diez = $request->parametro_diez;
+        $parametroFMA->parametro_once = $request->parametro_once;
+        $parametroFMA->parametro_doce = $request->parametro_doce;
+        $parametroFMA->parametro_trece = $request->parametro_trece;
+        $parametroFMA->historial_fma_id = $request->historial_fma_id;
+        $parametroFMA->save();
+
+        return response()->json(["Registro" => $parametroFMA, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +114,8 @@ class ParametroFMAController extends Controller
      */
     public function destroy(ParametroFMA $parametroFMA)
     {
-        //
+        $parametroFMA->delete();
+
+        return response()->json(["Registro" => $parametroFMA, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

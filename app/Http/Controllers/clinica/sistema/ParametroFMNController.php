@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clinica\sistema;
 
 use App\Http\Controllers\Controller;
+use App\Models\clinica\sistema\ParametroFMA;
 use App\Models\clinica\sistema\ParametroFMN;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class ParametroFMNController extends Controller
      */
     public function index()
     {
-        //
+        $values = ParametroFMN::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +39,23 @@ class ParametroFMNController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new ParametroFMA();
+        $insert->parametro_uno = $request->parametro_uno;
+        $insert->parametro_dos = $request->parametro_dos;
+        $insert->parametro_tres = $request->parametro_tres;
+        $insert->parametro_cuatro = $request->parametro_cuatro;
+        $insert->parametro_seis = $request->parametro_seis;
+        $insert->parametro_siete = $request->parametro_siete;
+        $insert->parametro_ocho = $request->parametro_ocho;
+        $insert->parametro_nueve = $request->parametro_nueve;
+        $insert->parametro_diez = $request->parametro_diez;
+        $insert->parametro_once = $request->parametro_once;
+        $insert->parametro_doce = $request->parametro_doce;
+        $insert->parametro_trece = $request->parametro_trece;
+        $insert->historial_fmn_id = $request->historial_fma_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +89,22 @@ class ParametroFMNController extends Controller
      */
     public function update(Request $request, ParametroFMN $parametroFMN)
     {
-        //
+        $parametroFMN->parametro_uno = $request->parametro_uno;
+        $parametroFMN->parametro_dos = $request->parametro_dos;
+        $parametroFMN->parametro_tres = $request->parametro_tres;
+        $parametroFMN->parametro_cuatro = $request->parametro_cuatro;
+        $parametroFMN->parametro_seis = $request->parametro_seis;
+        $parametroFMN->parametro_siete = $request->parametro_siete;
+        $parametroFMN->parametro_ocho = $request->parametro_ocho;
+        $parametroFMN->parametro_nueve = $request->parametro_nueve;
+        $parametroFMN->parametro_diez = $request->parametro_diez;
+        $parametroFMN->parametro_once = $request->parametro_once;
+        $parametroFMN->parametro_doce = $request->parametro_doce;
+        $parametroFMN->parametro_trece = $request->parametro_trece;
+        $parametroFMN->historial_fma_id = $request->historial_fma_id;
+        $parametroFMN->save();
+
+        return response()->json(["Registro" => $parametroFMN, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +115,8 @@ class ParametroFMNController extends Controller
      */
     public function destroy(ParametroFMN $parametroFMN)
     {
-        //
+        $parametroFMN->delete();
+
+        return response()->json(["Registro" => $parametroFMN, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

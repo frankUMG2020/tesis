@@ -15,7 +15,9 @@ class TelefonoFMNController extends Controller
      */
     public function index()
     {
-        //
+        $values = TelefonoFMN::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,12 @@ class TelefonoFMNController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new TelefonoFMN();
+        $insert->numero = $request->numero;
+        $insert->ficha_medica_n_id = $request->ficha_medica_n_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +77,11 @@ class TelefonoFMNController extends Controller
      */
     public function update(Request $request, TelefonoFMN $telefonoFMN)
     {
-        //
+        $telefonoFMN->numero = $request->numero;
+        $telefonoFMN->ficha_medica_n_id = $request->ficha_medica_n_id;
+        $telefonoFMN->save();
+
+        return response()->json(["Registro" => $telefonoFMN, "Mensaje" => "Felicidades Actualizaste"]);
     }
 
     /**
@@ -81,6 +92,8 @@ class TelefonoFMNController extends Controller
      */
     public function destroy(TelefonoFMN $telefonoFMN)
     {
-        //
+        $telefonoFMN->delete();
+
+        return response()->json(["Registro" => $telefonoFMN, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

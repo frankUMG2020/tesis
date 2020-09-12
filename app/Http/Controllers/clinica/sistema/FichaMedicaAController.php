@@ -15,7 +15,9 @@ class FichaMedicaAController extends Controller
      */
     public function index()
     {
-        //
+        $values = FichaMedicaA::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,20 @@ class FichaMedicaAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new FichaMedicaA();
+        $insert->fecha = $request->fecha;
+        $insert->estado_civil = $request->estado_civil;
+        $insert->profesion = $request->profesion;
+        $insert->foto = $request->foto;
+        $insert->remitido = $request->remitido;
+        $insert->observacion = $request->observacion;
+        $insert->codigo_epps = $request->codigo_epps;
+        $insert->cui = $request->cui;
+        $insert->tipo_sangre_id = $request->tipo_sande_id;
+        $insert->persona_id = $request->persona_id;
+        $insert->save();
+        
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +85,19 @@ class FichaMedicaAController extends Controller
      */
     public function update(Request $request, FichaMedicaA $fichaMedicaA)
     {
-        //
+        $fichaMedicaA->fecha = $request->fecha;
+        $fichaMedicaA->estado_civil = $request->estado_civil;
+        $fichaMedicaA->profesion = $request->profesion;
+        $fichaMedicaA->foto = $request->foto;
+        $fichaMedicaA->remitido = $request->remitido;
+        $fichaMedicaA->observacion = $request->observacion;
+        $fichaMedicaA->codigo_epps = $request->codigo_epps;
+        $fichaMedicaA->cui = $request->cui;
+        $fichaMedicaA->tipo_sangre_id = $request->tipo_sangre_id;
+        $fichaMedicaA->persona_id = $request->perosna_id;
+        $fichaMedicaA->save();
+
+        return response()->json(["Registro" => $fichaMedicaA, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +108,8 @@ class FichaMedicaAController extends Controller
      */
     public function destroy(FichaMedicaA $fichaMedicaA)
     {
-        //
+        $fichaMedicaA->delete();
+
+        return response()->json(["Registro" => $fichaMedicaA, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

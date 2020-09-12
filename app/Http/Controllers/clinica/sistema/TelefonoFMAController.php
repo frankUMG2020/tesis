@@ -15,7 +15,9 @@ class TelefonoFMAController extends Controller
      */
     public function index()
     {
-        //
+        $values = TelefonoFMA::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,12 @@ class TelefonoFMAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new TelefonoFMA();
+        $insert->numero = $request->numero;
+        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +77,11 @@ class TelefonoFMAController extends Controller
      */
     public function update(Request $request, TelefonoFMA $telefonoFMA)
     {
-        //
+        $telefonoFMA->numero = $request->numero;
+        $telefonoFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $telefonoFMA->save();
+
+        return response()->json(["Registro" => $telefonoFMA, "Mensaje" => "Felicidades Actualizaste"]);
     }
 
     /**
@@ -81,6 +92,8 @@ class TelefonoFMAController extends Controller
      */
     public function destroy(TelefonoFMA $telefonoFMA)
     {
-        //
+        $telefonoFMA->delete();
+
+        return response()->json(["Registro" => $telefonoFMA, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

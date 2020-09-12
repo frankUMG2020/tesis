@@ -15,7 +15,9 @@ class PerfilExamenController extends Controller
      */
     public function index()
     {
-        //
+        $values = PerfilExamen::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,12 @@ class PerfilExamenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new PerfilExamen();
+        $insert->perfil_id = $request->perfil_id;
+        $insert->examen_id = $request->examen_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +77,11 @@ class PerfilExamenController extends Controller
      */
     public function update(Request $request, PerfilExamen $perfilExamen)
     {
-        //
+        $perfilExamen->perfil_id = $request->perfil_id;
+        $perfilExamen->examen_id = $request->examen_id;
+        $perfilExamen->save();
+
+        return response()->json(["Registro" => $perfilExamen, "Mensaje" => "Felicidades Actualizaste"]);
     }
 
     /**
@@ -81,6 +92,8 @@ class PerfilExamenController extends Controller
      */
     public function destroy(PerfilExamen $perfilExamen)
     {
-        //
+        $perfilExamen->delete();
+
+        return response()->json(["Registro" => $perfilExamen, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

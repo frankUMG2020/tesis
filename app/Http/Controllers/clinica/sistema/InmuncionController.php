@@ -15,7 +15,9 @@ class InmuncionController extends Controller
      */
     public function index()
     {
-        //
+        $values = Inmuncion::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,13 @@ class InmuncionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new Inmuncion();
+        $insert->restante = $request->restante;
+        $insert->historial_fmn_id =  $request->historial_fmn_id;
+        $insert->vacuna_id = $request->vacuna_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +78,12 @@ class InmuncionController extends Controller
      */
     public function update(Request $request, Inmuncion $inmuncion)
     {
-        //
+        $inmuncion->restante = $request->restante;
+        $inmuncion->historial_fmn_id =  $request->historial_fmn_id;
+        $inmuncion->vacuna_id = $request->vacuna_id;
+        $inmuncion->save();
+
+        return response()->json(["Registro" => $inmuncion, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -81,6 +94,8 @@ class InmuncionController extends Controller
      */
     public function destroy(Inmuncion $inmuncion)
     {
-        //
+        $inmuncion->delete();
+
+        return response()->json(["Registro" => $inmuncion, "Mensaje" => "Felicidades insertaste"]);
     }
 }

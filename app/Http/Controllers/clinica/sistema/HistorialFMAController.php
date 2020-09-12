@@ -15,7 +15,9 @@ class HistorialFMAController extends Controller
      */
     public function index()
     {
-        //
+        $values = HistorialFMA::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,21 @@ class HistorialFMAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new HistorialFMA();
+        $insert->codigo = $request->codigo;
+        $insert->correlativo = $request->correlativo;
+        $insert->edad = $request->edad;
+        $insert->peso = $request->peso;
+        $insert->talla = $request->talla;
+        $insert->pulso = $request->pulso;
+        $insert->temperatura = $request->temperatura;
+        $insert->p_a = $request->p_a;
+        $insert->respiracion = $request->respiracion;
+        $insert->so_dos = $request->so_dos;
+        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +86,20 @@ class HistorialFMAController extends Controller
      */
     public function update(Request $request, HistorialFMA $historialFMA)
     {
-        //
+        $historialFMA->codigo = $request->codigo;
+        $historialFMA->correlativo = $request->correlativo;
+        $historialFMA->edad = $request->edad;
+        $historialFMA->peso = $request->peso;
+        $historialFMA->talla = $request->talla;
+        $historialFMA->pulso = $request->pulso;
+        $historialFMA->temperatura = $request->temperatura;
+        $historialFMA->p_a = $request->p_a;
+        $historialFMA->respiracion = $request->respiracion;
+        $historialFMA->so_dos = $request->so_dos;
+        $historialFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $historialFMA->save();
+
+        return response()->json(["Registro" => $historialFMA, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +110,8 @@ class HistorialFMAController extends Controller
      */
     public function destroy(HistorialFMA $historialFMA)
     {
-        //
+        $historialFMA->delete();
+
+        return response()->json(["Registro" => $historialFMA, "Mensaje" => "Felicidades Eliminaste"]);
     }
 }

@@ -15,7 +15,9 @@ class FichaMedicaNController extends Controller
      */
     public function index()
     {
-        //
+        $values = FichaMedicaN::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,21 @@ class FichaMedicaNController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new FichaMedicaN();
+        $insert->fecha = $request->fecha;
+        $insert->padre = $request->padre;
+        $insert->madre = $request->madre;
+        $insert->referido = $request->referido;
+        $insert->email = $request->email;
+        $insert->lugar_nacimiento = $request->lugar_nacimiento;
+        $insert->foto = $request->foto;
+        $insert->municipio_id = $request->municipio_id;
+        $insert->persona_id = $request->persona_id;
+        $insert->parto_id = $request->parto_id;
+        $insert->alimentacion_id = $request->alimentacion_id;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +86,20 @@ class FichaMedicaNController extends Controller
      */
     public function update(Request $request, FichaMedicaN $fichaMedicaN)
     {
-        //
+        $fichaMedicaN->fecha = $request->fecha;
+        $fichaMedicaN->padre = $request->padre;
+        $fichaMedicaN->madre = $request->madre;
+        $fichaMedicaN->referido = $request->referido;
+        $fichaMedicaN->email = $request->email;
+        $fichaMedicaN->lugar_nacimiento = $request->lugar_nacimiento;
+        $fichaMedicaN->foto = $request->foto;
+        $fichaMedicaN->municipio_id = $request->municipio_id;
+        $fichaMedicaN->persona_id = $request->persona_id;
+        $fichaMedicaN->parto_id = $request->parto_id;
+        $fichaMedicaN->alimentacion_id = $request->alimentacion_id;
+        $fichaMedicaN->save();
+
+        return response()->json(["Registro" => $fichaMedicaN, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +110,8 @@ class FichaMedicaNController extends Controller
      */
     public function destroy(FichaMedicaN $fichaMedicaN)
     {
-        //
+        $fichaMedicaN->delete();
+
+        return response()->json(["Registro" => $fichaMedicaN, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

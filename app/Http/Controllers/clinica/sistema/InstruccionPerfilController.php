@@ -15,7 +15,9 @@ class InstruccionPerfilController extends Controller
      */
     public function index()
     {
-        //
+        $values = InstruccionPerfil::get();
+
+        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
     }
 
     /**
@@ -36,7 +38,11 @@ class InstruccionPerfilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = new InstruccionPerfil();
+        $insert->descripcion = $request->descripcion;
+        $insert->save();
+
+        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
     }
 
     /**
@@ -70,7 +76,10 @@ class InstruccionPerfilController extends Controller
      */
     public function update(Request $request, InstruccionPerfil $instruccionPerfil)
     {
-        //
+        $instruccionPerfil->descripcion = $request->descripcion;
+        $instruccionPerfil->save();
+
+        return response()->json(["Registro" => $instruccionPerfil, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -81,6 +90,8 @@ class InstruccionPerfilController extends Controller
      */
     public function destroy(InstruccionPerfil $instruccionPerfil)
     {
-        //
+        $instruccionPerfil->delete();
+
+        return response()->json(["Registro" => $instruccionPerfil, "Mensaje" => "Felicidades eliminaste"]);
     }
 }
