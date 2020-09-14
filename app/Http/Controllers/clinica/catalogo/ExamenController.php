@@ -50,10 +50,10 @@ class ExamenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\clinica\catalogo\Examen  $examen
+     * @param  \App\Models\clinica\catalogo\Examen  $examan
      * @return \Illuminate\Http\Response
      */
-    public function show(Examen $examen)
+    public function show(Examen $examan)
     {
         //
     }
@@ -61,10 +61,10 @@ class ExamenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\clinica\catalogo\Examen  $examen
+     * @param  \App\Models\clinica\catalogo\Examen  $examan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Examen $examen)
+    public function edit(Examen $examan)
     {
         //
     }
@@ -73,29 +73,29 @@ class ExamenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\clinica\catalogo\Examen  $examen
+     * @param  \App\Models\clinica\catalogo\Examen  $examan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Examen $examen)
+    public function update(Request $request, Examen $examan)
     {
-        $examen->nombre = $request->nombre;
-        $examen->laboratorio_id = $request->laboratorio_id;
-        $examen->categoria_examen_id = $request->categoria_examen_id;
-        $examen->save();
+        $examan->nombre = $request->nombre;
+        $examan->laboratorio_id = $request->laboratorio_id;
+        $examan->categoria_examen_id = $request->categoria_examen_id;
+        $examan->save();
         
-        return response()->json(["Registro" => $examen, "Mensaje" => "Felicidades actualizaste"]);
+        return response()->json(["Registro" => $examan, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\clinica\catalogo\Examen  $examen
+     * @param  \App\Models\clinica\catalogo\Examen  $examan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Examen $examen)
+    public function destroy(Examen $examan)
     {
-        $examen->delete();
+        $examan->delete();
 
-        return response()->json(["Registro" => $examen, "Mensaje" => "Felicidades eliminaste"]);
+        return response()->json(["Registro" => $examan, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

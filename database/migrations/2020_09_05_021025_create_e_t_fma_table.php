@@ -11,6 +11,8 @@ class CreateETFmaTable extends Migration
      *
      * @return void
      */
+
+     //Crear modelo y controlador en la carpeta que se llama sistema
     public function up()
     {
         Schema::create('e_t_fma', function (Blueprint $table) {

@@ -48,10 +48,10 @@ class CategoriaExamenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExamen
+     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExaman
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoriaExamen $categoriaExamen)
+    public function show(CategoriaExamen $categoriaExaman)
     {
         //
     }
@@ -59,10 +59,10 @@ class CategoriaExamenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExamen
+     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExaman
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoriaExamen $categoriaExamen)
+    public function edit(CategoriaExamen $categoriaExaman)
     {
         //
     }
@@ -71,15 +71,15 @@ class CategoriaExamenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExamen
+     * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExaman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoriaExamen $categoriaExamen)
+    public function update(Request $request, CategoriaExamen $categoriaExaman)
     {
-        $categoriaExamen->nombre = $request->nombre;
-        $categoriaExamen->save();
+        $categoriaExaman->nombre = $request->nombre;
+        $categoriaExaman->save();
 
-        return response()->json(["Registro" => $categoriaExamen, "Mensaje" => "Felicidades actualizaste"]);
+        return response()->json(["Registro" => $categoriaExaman, "Mensaje" => "Felicidades actualizaste"]);
     }
 
     /**
@@ -88,10 +88,10 @@ class CategoriaExamenController extends Controller
      * @param  \App\Models\clinica\catalogo\CategoriaExamen  $categoriaExamen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoriaExamen $categoriaExamen)
+    public function destroy(CategoriaExamen $categoriaExaman)
     {
-        $categoriaExamen->delete();
+        $categoriaExaman->delete();
         
-        return response()->json(["Registro" => $categoriaExamen, "Mensaje" => "Felicidades eliminaste"]);
+        return response()->json(["Registro" => $categoriaExaman, "Mensaje" => "Felicidades eliminaste"]);
     }
 }

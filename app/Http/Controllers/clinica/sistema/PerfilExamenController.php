@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\clinica\sistema\PerfilExamen;
-use Illuminate\Http\Request;
 
 class PerfilExamenController extends Controller
 {
@@ -38,6 +39,12 @@ class PerfilExamenController extends Controller
      */
     public function store(Request $request)
     {
+        $existe = PerfilExamen::where('perfil_id', $request->perfil_id)->where('examen_id', $request->examen_id)->first();
+        
+        if(!is_null($existe))
+            return response()->json(["Mensaje" => "Ya existe"]);
+
+
         $insert = new PerfilExamen();
         $insert->perfil_id = $request->perfil_id;
         $insert->examen_id = $request->examen_id;
@@ -77,11 +84,7 @@ class PerfilExamenController extends Controller
      */
     public function update(Request $request, PerfilExamen $perfilExamen)
     {
-        $perfilExamen->perfil_id = $request->perfil_id;
-        $perfilExamen->examen_id = $request->examen_id;
-        $perfilExamen->save();
-
-        return response()->json(["Registro" => $perfilExamen, "Mensaje" => "Felicidades Actualizaste"]);
+        //
     }
 
     /**

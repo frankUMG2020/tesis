@@ -48,10 +48,35 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'public' => [
+        //Es para guardar fotografias de los niños
+        'foto_fmn' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public/foto_fmn'),
             'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        //Es para guardar fotografias de los adultos
+        'foto_fma' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/foto_fma'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        //Es para guardar imagenes de examenes de los niños
+        'anexo_fmn' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/anexo_fmn'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        //Es para guardar imagenes de examenes de los adultos
+        'anexo_fma' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/foto_fma'),
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 

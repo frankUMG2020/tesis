@@ -44,7 +44,7 @@ class PersonaController extends Controller
         $insert->apellido_uno = $request->apellido_uno;
         $insert->apellido_dos = $request->apellido_dos;
         $insert->sexo = $request->sexo;
-        $insert->fecha_nacimiento = $request->fecha_nacimiento;
+        $insert->fecha_nacimiento = date('Y-m-d', strtotime($request->fecha_nacimiento));
         $insert->save();
 
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
@@ -86,7 +86,7 @@ class PersonaController extends Controller
         $persona->apellido_uno = $request->apellido_uno;
         $persona->apellido_dos = $request->apellido_dos;
         $persona->sexo = $request->sexo;
-        $persona->fecha_nacimiento = $request->fecha_nacimiento;
+        $persona->fecha_nacimiento = date('Y-m-d', strtotime($request->fecha_nacimiento));
         $persona->save();
 
         return response()->json(["Registro" => $persona, "Mensaje" => "Felicidades Actualizaste"]);

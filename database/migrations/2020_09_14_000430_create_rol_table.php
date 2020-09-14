@@ -4,23 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePerfilExamenTable extends Migration
+class CreateRolTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
+    //Crear modelo y controlador en la carpeta que se llama seguridad
     public function up()
     {
-        Schema::create('perfil_examen', function (Blueprint $table) {
+        Schema::create('rol', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('perfil_id');
-            $table->foreign('perfil_id')->references('id')->on('perfil');
-
-            $table->unsignedBigInteger('examen_id');
-            $table->foreign('examen_id')->references('id')->on('examen');
-            
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreatePerfilExamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perfil_examen');
+        Schema::dropIfExists('rol');
     }
 }

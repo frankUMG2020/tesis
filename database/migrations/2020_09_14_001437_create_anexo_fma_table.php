@@ -4,22 +4,24 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePerfilExamenTable extends Migration
+class CreateAnexoFmaTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
+    //Crear modelo y controlador en la carpeta que se llama sistema
     public function up()
     {
-        Schema::create('perfil_examen', function (Blueprint $table) {
+        Schema::create('anexo_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('perfil_id');
-            $table->foreign('perfil_id')->references('id')->on('perfil');
+            $table->string('nombre');
+            $table->string('path');
 
-            $table->unsignedBigInteger('examen_id');
-            $table->foreign('examen_id')->references('id')->on('examen');
+            $table->unsignedBigInteger('historial_fma_id');
+            $table->foreign('historial_fma_id')->references('id')->on('historial_fma');
             
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ class CreatePerfilExamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perfil_examen');
+        Schema::dropIfExists('anexo_fma');
     }
 }

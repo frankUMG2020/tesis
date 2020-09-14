@@ -32,7 +32,7 @@ Route::resource('direccionFMA', 'clinica\sistema\DireccionFMAController');
 Route::resource('direccionFMN', 'clinica\sistema\DireccionFMNController');
 Route::resource('enfermedadHistorial', 'clinica\sistema\EnfermedadHistorialController');
 Route::resource('examenFMA', 'clinica\sistema\ExamenFMAController');
-Route::resource('examenFMN', 'clinica\sistema\ExmaenFMNController');
+Route::resource('examenFMN', 'clinica\sistema\ExamenFMNController');
 Route::resource('fichaMedicaA', 'clinica\sistema\FichaMedicaAController');
 Route::resource('fichaMedicaN', 'clinica\sistema\FichaMedicaNController');
 Route::resource('historialFMA', 'clinica\sistema\HistorialFMAController');

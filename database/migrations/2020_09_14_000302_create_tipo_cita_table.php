@@ -4,23 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePerfilExamenTable extends Migration
+class CreateTipoCitaTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
+    //Crear modelo y controlador en la carpeta que se llama catalogo
     public function up()
     {
-        Schema::create('perfil_examen', function (Blueprint $table) {
+        Schema::create('tipo_cita', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('perfil_id');
-            $table->foreign('perfil_id')->references('id')->on('perfil');
-
-            $table->unsignedBigInteger('examen_id');
-            $table->foreign('examen_id')->references('id')->on('examen');
-            
+            $table->string('nombre')->unique();
+            $table->string('color');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreatePerfilExamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perfil_examen');
+        Schema::dropIfExists('tipo_cita');
     }
 }

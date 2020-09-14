@@ -5,6 +5,7 @@ namespace App\Http\Controllers\clinica\sistema;
 use App\Http\Controllers\Controller;
 use App\Models\clinica\sistema\FichaMedicaN;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FichaMedicaNController extends Controller
 {
@@ -39,17 +40,22 @@ class FichaMedicaNController extends Controller
     public function store(Request $request)
     {
         $insert = new FichaMedicaN();
-        $insert->fecha = $request->fecha;
+        $insert->fecha = date('Y-m-d', strtotime($request->fecha));
         $insert->padre = $request->padre;
         $insert->madre = $request->madre;
         $insert->referido = $request->referido;
         $insert->email = $request->email;
         $insert->lugar_nacimiento = $request->lugar_nacimiento;
-        $insert->foto = $request->foto;
+        $insert->foto = null;
         $insert->municipio_id = $request->municipio_id;
         $insert->persona_id = $request->persona_id;
         $insert->parto_id = $request->parto_id;
         $insert->alimentacion_id = $request->alimentacion_id;
+        $insert->save();
+
+        $image = $request->file('foto');
+        $nueva = Storage::disk('foto_fmn')->put('/', $image);
+        $insert->foto = $nueva;
         $insert->save();
 
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
