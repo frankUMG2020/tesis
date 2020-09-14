@@ -17,7 +17,8 @@ class CreateETFmaTable extends Migration
     {
         Schema::create('e_t_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('descripcion');
+            $table->longText('evolucion');
+            $table->longText('tratamiento');
 
             $table->unsignedBigInteger('parametros_fma_id');
             $table->foreign('parametros_fma_id')->references('id')->on('parametros_fma');

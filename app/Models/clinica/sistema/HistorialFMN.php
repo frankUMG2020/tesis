@@ -32,4 +32,9 @@ class HistorialFMN extends Model
     {
         return $this->hasMany(ParametroFMN::class, 'historial_fmn_id', 'id');
     }
+
+    public function anexos_fmn()
+    {
+        return $this->hasMany(AnexoFMN::class, 'historial_fmn_id', 'id');
+    }
 }

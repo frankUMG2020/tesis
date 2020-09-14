@@ -22,4 +22,9 @@ class HistorialFMA extends Model
     {
         return $this->hasMany(ParametroFMA::class, 'historial_fma_id', 'id');
     }
+
+    public function anexos_fma()
+    {
+        return $this->hasMany(AnexoFMA::class, 'historial_fma_id', 'id');
+    }
 }

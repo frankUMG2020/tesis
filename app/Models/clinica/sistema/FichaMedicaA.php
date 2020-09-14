@@ -53,8 +53,13 @@ class FichaMedicaA extends Model
         return $this->hasMany(DireccionFMA::class, 'ficha_medica_a_id', 'id');
     }
 
-    public function historial_fma()
+    public function historiales_fma()
     {
         return $this->hasMany(HistorialFMA::class, 'ficha_medica_a_id', 'id');
+    }
+
+    public function calendarios_fma()
+    {
+        return $this->hasMany(CalendarioFMA::class, 'ficha_medica_a_id', 'id');
     }
 }

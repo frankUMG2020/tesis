@@ -21,7 +21,7 @@ class CreateAnexoFmnTable extends Migration
             $table->string('path');
 
             $table->unsignedBigInteger('ficha_medica_n_id');
-            $table->foreign('ficha_medica_n_id')->references('id')->on('ficha_medica_n');
+            $table->foreign('historial_fmn_id')->references('id')->on('ficha_medica_n');
             
             $table->timestamps();
         });
