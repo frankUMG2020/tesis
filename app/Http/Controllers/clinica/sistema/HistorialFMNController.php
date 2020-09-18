@@ -39,7 +39,7 @@ class HistorialFMNController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new HistorialFMA();
+        $insert = new HistorialFMN();
         $insert->codigo = $request->codigo;
         $insert->correlativo = $request->correlativo;
         $insert->edad = $request->edad;

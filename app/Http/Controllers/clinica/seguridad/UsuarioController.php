@@ -44,6 +44,7 @@ class UsuarioController extends Controller
         $insert->password = $request->password;
         $insert->activo = $request->activo;
         $insert->persona_id = $request->persona_id;
+        $insert->rol_id = $request->rol_id;
         $insert->save();
 
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
@@ -85,6 +86,7 @@ class UsuarioController extends Controller
         $usuario->password = $request->password;
         $usuario->activo = $request->activo;
         $usuario->persona_id = $request->persona_id;
+        $usuario->rol_id = $request->rol_id;
         $usuario->save();
 
         return response()->json(["Registro" => $usuario, "Mensaje" => "Felicidades Actualizaste"]);

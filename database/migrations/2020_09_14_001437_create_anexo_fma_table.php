@@ -18,7 +18,7 @@ class CreateAnexoFmaTable extends Migration
         Schema::create('anexo_fma', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->string('path');
+            $table->longText('path');
 
             $table->unsignedBigInteger('historial_fma_id');
             $table->foreign('historial_fma_id')->references('id')->on('historial_fma');

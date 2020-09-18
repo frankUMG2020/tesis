@@ -92,17 +92,22 @@ class FichaMedicaNController extends Controller
      */
     public function update(Request $request, FichaMedicaN $fichaMedicaN)
     {
-        $fichaMedicaN->fecha = $request->fecha;
+        $fichaMedicaN->fecha = date('Y-m-d', strtotime($request->fecha));
         $fichaMedicaN->padre = $request->padre;
         $fichaMedicaN->madre = $request->madre;
         $fichaMedicaN->referido = $request->referido;
         $fichaMedicaN->email = $request->email;
         $fichaMedicaN->lugar_nacimiento = $request->lugar_nacimiento;
-        $fichaMedicaN->foto = $request->foto;
+        $fichaMedicaN->foto = null;
         $fichaMedicaN->municipio_id = $request->municipio_id;
         $fichaMedicaN->persona_id = $request->persona_id;
         $fichaMedicaN->parto_id = $request->parto_id;
         $fichaMedicaN->alimentacion_id = $request->alimentacion_id;
+        $fichaMedicaN->save();
+
+        $image = $request->file('foto');
+        $nueva = Storage::disk('foto_fmn')->put('/', $image);
+        $fichaMedicaN->foto = $nueva;
         $fichaMedicaN->save();
 
         return response()->json(["Registro" => $fichaMedicaN, "Mensaje" => "Felicidades actualizaste"]);

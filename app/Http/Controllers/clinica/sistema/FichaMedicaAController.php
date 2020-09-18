@@ -5,6 +5,7 @@ namespace App\Http\Controllers\clinica\sistema;
 use App\Http\Controllers\Controller;
 use App\Models\clinica\sistema\FichaMedicaA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FichaMedicaAController extends Controller
 {
@@ -39,16 +40,21 @@ class FichaMedicaAController extends Controller
     public function store(Request $request)
     {
         $insert = new FichaMedicaA();
-        $insert->fecha = $request->fecha;
+        $insert->fecha = date('Y-m-d', strtotime($request->fecha));
         $insert->estado_civil = $request->estado_civil;
         $insert->profesion = $request->profesion;
-        $insert->foto = $request->foto;
+        $insert->foto = null;
         $insert->remitido = $request->remitido;
         $insert->observacion = $request->observacion;
         $insert->codigo_epps = $request->codigo_epps;
         $insert->cui = $request->cui;
-        $insert->tipo_sangre_id = $request->tipo_sande_id;
+        $insert->tipo_sangre_id = $request->tipo_sangre_id;
         $insert->persona_id = $request->persona_id;
+        $insert->save();
+
+        $image = $request->file('foto');
+        $nueva = Storage::disk('foto_fma')->put('/', $image);
+        $insert->foto = $nueva;
         $insert->save();
         
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
@@ -85,16 +91,21 @@ class FichaMedicaAController extends Controller
      */
     public function update(Request $request, FichaMedicaA $fichaMedicaA)
     {
-        $fichaMedicaA->fecha = $request->fecha;
+        $fichaMedicaA->fecha = date('Y-m-d', strtotime($request->fecha));
         $fichaMedicaA->estado_civil = $request->estado_civil;
         $fichaMedicaA->profesion = $request->profesion;
-        $fichaMedicaA->foto = $request->foto;
+        $fichaMedicaA->foto = null;
         $fichaMedicaA->remitido = $request->remitido;
         $fichaMedicaA->observacion = $request->observacion;
         $fichaMedicaA->codigo_epps = $request->codigo_epps;
         $fichaMedicaA->cui = $request->cui;
         $fichaMedicaA->tipo_sangre_id = $request->tipo_sangre_id;
-        $fichaMedicaA->persona_id = $request->perosna_id;
+        $fichaMedicaA->persona_id = $request->persona_id;
+        $fichaMedicaA->save();
+
+        $image = $request->file('foto');
+        $nueva = Storage::disk('foto_fmn')->put('/', $image);
+        $fichaMedicaA->foto = $nueva;
         $fichaMedicaA->save();
 
         return response()->json(["Registro" => $fichaMedicaA, "Mensaje" => "Felicidades actualizaste"]);

@@ -40,9 +40,9 @@ class CalendarioFMNController extends Controller
     {
         $insert = new CalendarioFMN();
         $insert->cita = $request->cita;
-        $insert->fecha =$request->fecha;
+        $insert->fecha = date('Y-m-d', strtotime($request->fecha));
         $insert->hora = $request->hora;
-        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $insert->ficha_medica_n_id = $request->ficha_medica_n_id;
         $insert->estado_calendario_id = $request->estado_calendario_id;
         $insert->tipo_cita_id = $request->tipo_cita_id;
         $insert->save();
@@ -82,9 +82,9 @@ class CalendarioFMNController extends Controller
     public function update(Request $request, CalendarioFMN $calendarioFMN)
     {
         $calendarioFMN->cita = $request->cita;
-        $calendarioFMN->fecha =$request->fecha;
+        $calendarioFMN->fecha = date('Y-m-d', strtotime($request->fecha));
         $calendarioFMN->hora = $request->hora;
-        $calendarioFMN->ficha_medica_a_id = $request->ficha_medica_a_id;
+        $calendarioFMN->ficha_medica_n_id = $request->ficha_medica_n_id;
         $calendarioFMN->estado_calendario_id = $request->estado_calendario_id;
         $calendarioFMN->tipo_cita_id = $request->tipo_cita_id;
         $calendarioFMN->save();

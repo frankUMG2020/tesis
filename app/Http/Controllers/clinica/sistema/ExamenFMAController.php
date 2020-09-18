@@ -77,7 +77,7 @@ class ExamenFMAController extends Controller
      */
     public function update(Request $request, ExamenFMA $examenFMA)
     {
-        $examenFMA->historial_fma_id = $request->examen_fma_id;
+        $examenFMA->historial_fma_id = $request->historial_fma_id;
         $examenFMA->examen_id = $request->examen_id;
         $examenFMA->save();
 

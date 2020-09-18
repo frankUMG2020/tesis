@@ -39,7 +39,7 @@ class ParametroFMNController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new ParametroFMA();
+        $insert = new ParametroFMN();
         $insert->parametro_uno = $request->parametro_uno;
         $insert->parametro_dos = $request->parametro_dos;
         $insert->parametro_tres = $request->parametro_tres;
@@ -52,7 +52,7 @@ class ParametroFMNController extends Controller
         $insert->parametro_once = $request->parametro_once;
         $insert->parametro_doce = $request->parametro_doce;
         $insert->parametro_trece = $request->parametro_trece;
-        $insert->historial_fmn_id = $request->historial_fma_id;
+        $insert->historial_fmn_id = $request->historial_fmn_id;
         $insert->save();
 
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
@@ -101,7 +101,7 @@ class ParametroFMNController extends Controller
         $parametroFMN->parametro_once = $request->parametro_once;
         $parametroFMN->parametro_doce = $request->parametro_doce;
         $parametroFMN->parametro_trece = $request->parametro_trece;
-        $parametroFMN->historial_fma_id = $request->historial_fma_id;
+        $parametroFMN->historial_fmn_id = $request->historial_fmn_id;
         $parametroFMN->save();
 
         return response()->json(["Registro" => $parametroFMN, "Mensaje" => "Felicidades actualizaste"]);

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParametroFMN extends Model
 {
-    protected $table = 'parametro_fmn';
+    protected $table = 'parametros_fmn';
     /**
      * The attributes that are mass assignable.
      *

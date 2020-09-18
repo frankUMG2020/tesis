@@ -18,10 +18,10 @@ class CreateAnexoFmnTable extends Migration
         Schema::create('anexo_fmn', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->string('path');
+            $table->longText('path');
 
-            $table->unsignedBigInteger('ficha_medica_n_id');
-            $table->foreign('historial_fmn_id')->references('id')->on('ficha_medica_n');
+            $table->unsignedBigInteger('historial_fmn_id');
+            $table->foreign('historial_fmn_id')->references('id')->on('historial_fmn');
             
             $table->timestamps();
         });

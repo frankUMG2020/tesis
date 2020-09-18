@@ -40,7 +40,7 @@ class CalendarioFMAController extends Controller
     {
         $insert = new CalendarioFMA();
         $insert->cita = $request->cita;
-        $insert->fecha =$request->fecha;
+        $insert->fecha =date('Y-m-d', strtotime($request->fecha));
         $insert->hora = $request->hora;
         $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
         $insert->estado_calendario_id = $request->estado_calendario_id;
@@ -82,7 +82,7 @@ class CalendarioFMAController extends Controller
     public function update(Request $request, CalendarioFMA $calendarioFMA)
     {
         $calendarioFMA->cita = $request->cita;
-        $calendarioFMA->fecha =$request->fecha;
+        $calendarioFMA->fecha =date('Y-m-d', strtotime($request->fecha));
         $calendarioFMA->hora = $request->hora;
         $calendarioFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
         $calendarioFMA->estado_calendario_id = $request->estado_calendario_id;

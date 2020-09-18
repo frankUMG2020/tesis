@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inmuncion extends Model
 {
-    protected $table = 'inmucion_historial';
+    protected $table = 'inmuncion_historial';
     /**
      * The attributes that are mass assignable.
      *

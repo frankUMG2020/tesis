@@ -15,11 +15,16 @@ class Usuario extends Model
      */
 
     protected $fillable = [
-        'nombre_completo','email','password','activo','persona_id'
+        'nombre_completo','email','password','activo','persona_id','rol_id'
     ];
 
     public function persona()
     {
         return $this->belongsTo(Persona::class, 'persona_id', 'id');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'rol_id', 'id');
     }
 }

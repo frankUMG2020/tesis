@@ -41,7 +41,7 @@ class ETFMNController extends Controller
         $insert = new ETFMN();
         $insert->evolucion = $request->evolucion;
         $insert->tratamiento = $request->tratamiento;
-        $insert->parametros_fma_id = $request->parametros_fma_id;
+        $insert->parametros_fmn_id = $request->parametros_fmn_id;
         $insert->save();
 
         return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
@@ -80,7 +80,7 @@ class ETFMNController extends Controller
     {
         $eTFMN->evolucion = $request->evolucion;
         $eTFMN->tratamiento = $request->tratamiento;
-        $eTFMN->parametros_fma_id = $request->parametros_fma_id;
+        $eTFMN->parametros_fmn_id = $request->parametros_fmn_id;
         $eTFMN->save();
 
         return response()->json(["Registro" => $eTFMN, "Mensaje" => "Felicidades Actualizaste"]);

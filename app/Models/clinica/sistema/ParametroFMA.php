@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParametroFMA extends Model
 {
-    protected $table = 'parametro_fma';
+    protected $table = 'parametros_fma';
     /**
      * The attributes that are mass assignable.
      *

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\AnexoFMA;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Models\clinica\sistema\AnexoFMA;
 
 class AnexoFMAController extends Controller
 {
@@ -40,7 +41,11 @@ class AnexoFMAController extends Controller
     {
         $insert = new AnexoFMA();
         $insert->nombre = $request->nombre;
-        $insert->path = $request->path;
+
+        $image = $request->file('path');
+        $nueva = Storage::disk('anexo_fma')->put('/', $image);
+        $insert->path = $nueva;
+        
         $insert->historial_fma_id = $request->historial_fma_id;
         $insert->save();
 
@@ -79,7 +84,11 @@ class AnexoFMAController extends Controller
     public function update(Request $request, AnexoFMA $anexoFMA)
     {
         $anexoFMA->nombre = $request->nombre;
-        $anexoFMA->path = $request->path;
+
+        $image = $request->file('path');
+        $nueva = Storage::disk('anexo_fmn')->put('/', $image);
+        $anexoFMA->path = $nueva;
+
         $anexoFMA->historial_fma_id = $request->path;
         $anexoFMA->save();
 

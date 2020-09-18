@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\AnexoFMN;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Models\clinica\sistema\AnexoFMN;
 
 class AnexoFMNController extends Controller
 {
@@ -40,7 +41,11 @@ class AnexoFMNController extends Controller
     {
         $insert = new AnexoFMN();
         $insert->nombre = $request->nombre;
-        $insert->path = $request->path;
+
+        $image = $request->file('path');
+        $nueva = Storage::disk('anexo_fmn')->put('/', $image);
+        $insert->path = $nueva;
+
         $insert->historial_fmn_id = $request->historial_fmn_id;
         $insert->save();
 
@@ -79,7 +84,11 @@ class AnexoFMNController extends Controller
     public function update(Request $request, AnexoFMN $anexoFMN)
     {
         $anexoFMN->nombre = $request->nombre;
-        $anexoFMN->path = $request->path;
+        
+        $image = $request->file('path');
+        $nueva = Storage::disk('anexo_fmn')->put('/', $image);
+        $anexoFMN->path = $nueva;
+
         $anexoFMN->historial_fmn_id = $request->historial_fmn_id;
         $anexoFMN->save();
 
