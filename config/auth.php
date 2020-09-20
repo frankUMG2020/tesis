@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\escuela\seguridad\Usuario;
+use App\Models\clinica\seguridad\Usuario;
 
 return [
 

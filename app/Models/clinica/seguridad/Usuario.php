@@ -2,10 +2,10 @@
 
 namespace App\Models\clinica\seguridad;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\clinica\sistema\Persona;
-use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
     /**
@@ -17,6 +17,16 @@ class Usuario extends Model
     protected $fillable = [
         'nombre_completo','email','password','activo','persona_id','rol_id'
     ];
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     public function persona()
     {

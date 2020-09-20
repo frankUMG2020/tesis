@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
 {
+    const Masculino = 'Masculino';
+    const Femenino = 'Femenino';
+
     protected $table = 'persona';
     /**
      * The attributes that are mass assignable.

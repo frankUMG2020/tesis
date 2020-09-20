@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Escuela',
+    'title' => 'Clinica',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,12 +30,12 @@ return [
     |
     */
 
-    'logo' => '<b>UMG</b> Escuela',
+    'logo' => '<b>UMG</b> Clinica',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Escuela',
+    'logo_img_alt' => 'Clinica',
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ return [
     |
     */
 
-    'right_sidebar' => false,
+    'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-cogs',
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
@@ -173,30 +173,46 @@ return [
     */
 
     'menu' => [
-        ['header' => 'Menú de la escuela'],
+        ['header' => 'Menú de la clinica'],
         [
             'text'    => 'Catálogos',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Bimestre',
-                    'url'  => 'bimestre',
+                    'text' => 'Alimentación',
+                    'url'  => 'alimentacion',
                 ],
                 [
-                    'text' => 'Curso',
-                    'url'  => 'curso',
+                    'text' => 'Categoría de Examenes',
+                    'url'  => 'categoriaExamen',
                 ],
                 [
-                    'text' => 'Carrera',
-                    'url'  => 'carrera',
+                    'text' => 'Configuración Enfermedad',
+                    'url'  => 'configuracionEnfermedad',
                 ],
                 [
-                    'text' => 'Grado',
-                    'url'  => 'grado',
+                    'text' => 'Examen',
+                    'url'  => 'examen',
                 ],
                 [
-                    'text' => 'Sección',
-                    'url'  => 'seccion',
+                    'text' => 'Laboratorio',
+                    'url'  => 'laboratorio',
+                ],
+                [
+                    'text' => 'Parto',
+                    'url'  => 'parto',
+                ],
+                [
+                    'text' => 'Tipo de Cita',
+                    'url'  => 'tipoCita',
+                ],
+                [
+                    'text' => 'Tipo de Sangre',
+                    'url'  => 'tipoSangre',
+                ],
+                [
+                    'text' => 'Vacuna',
+                    'url'  => 'vacuna',
                 ]
             ],
         ],

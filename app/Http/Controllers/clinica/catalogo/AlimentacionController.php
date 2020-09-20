@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clinica\catalogo;
 
 use App\Http\Controllers\Controller;
 use App\Models\clinica\catalogo\Alimentacion;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AlimentacionController extends Controller
@@ -13,11 +14,22 @@ class AlimentacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = Alimentacion::get();
+        try {
+            if (isset($request->buscar))
+                $values = Alimentacion::search($request->buscar)->paginate(10);
+            else
+                $values = Alimentacion::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.alimentacion.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }        
     }
 
     /**
@@ -27,7 +39,15 @@ class AlimentacionController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.alimentacion.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }   
     }
 
     /**
@@ -38,11 +58,19 @@ class AlimentacionController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new Alimentacion();
-        $insert->nombre = $request->nombre;
-        $insert->save();
+        try {
+            $insert = new Alimentacion();
+            $insert->nombre = $request->nombre;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('alimentacion.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('alimentacion.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('alimentacion.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +81,15 @@ class AlimentacionController extends Controller
      */
     public function show(Alimentacion $alimentacion)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +100,15 @@ class AlimentacionController extends Controller
      */
     public function edit(Alimentacion $alimentacion)
     {
-        //
+        try {
+            return view('clinica.catalogo.alimentacion.edit', compact('alimentacion'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +120,22 @@ class AlimentacionController extends Controller
      */
     public function update(Request $request, Alimentacion $alimentacion)
     {
-        $alimentacion->nombre = $request->nombre;
-        $alimentacion->save();
+        try {
+            $alimentacion->nombre = $request->nombre;
 
-        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$alimentacion->isDirty())
+                return redirect()->route('alimentacion.edit', $alimentacion->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $alimentacion->save();
+
+            return redirect()->route('alimentacion.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('alimentacion.edit', $alimentacion->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('alimentacion.edit', $alimentacion->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +146,16 @@ class AlimentacionController extends Controller
      */
     public function destroy(Alimentacion $alimentacion)
     {
-        $alimentacion->delete();
+        try {
+            $alimentacion->delete();
 
-        return response()->json(["Registro" => $alimentacion, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('alimentacion.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

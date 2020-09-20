@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\catalogo\Laboratorio;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\Laboratorio;
 
 class LaboratorioController extends Controller
 {
@@ -13,11 +14,22 @@ class LaboratorioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = Laboratorio::get();
+        try {
+            if (isset($request->buscar))
+                $values = Laboratorio::search($request->buscar)->paginate(10);
+            else
+                $values = Laboratorio::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.laboratorio.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -27,7 +39,15 @@ class LaboratorioController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.laboratorio.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -38,13 +58,21 @@ class LaboratorioController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new Laboratorio();
-        $insert->nombre = $request->nombre;
-        $insert->direccion = $request->direccion;
-        $insert->telefono = $request->telefono;
-        $insert->save();
+        try {
+            $insert = new Laboratorio();
+            $insert->nombre = $request->nombre;
+            $insert->direccion = $request->direccion;
+            $insert->telefono = $request->telefono;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('laboratorio.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('laboratorio.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('laboratorio.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -55,7 +83,14 @@ class LaboratorioController extends Controller
      */
     public function show(Laboratorio $laboratorio)
     {
-        //
+        try {
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -66,7 +101,15 @@ class LaboratorioController extends Controller
      */
     public function edit(Laboratorio $laboratorio)
     {
-        //
+        try {
+            return view('clinica.catalogo.laboratorio.edit', ['valor' => $laboratorio]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -78,12 +121,24 @@ class LaboratorioController extends Controller
      */
     public function update(Request $request, Laboratorio $laboratorio)
     {
-        $laboratorio->nombre = $request->nombre;
-        $laboratorio->direccion = $request->direccion;
-        $laboratorio->telefono = $request->telefono;
-        $laboratorio->save();
-        
-        return response()->json(["Registro" => $laboratorio, "Mensaje" => "Felicidades actualizaste"]);
+        try {
+            $laboratorio->nombre = $request->nombre;
+            $laboratorio->direccion = $request->direccion;
+            $laboratorio->telefono = $request->telefono;
+
+            if (!$laboratorio->isDirty())
+                return redirect()->route('laboratorio.edit', $laboratorio->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $laboratorio->save();
+
+            return redirect()->route('laboratorio.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('laboratorio.edit', $laboratorio->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('laboratorio.edit', $laboratorio->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -94,8 +149,16 @@ class LaboratorioController extends Controller
      */
     public function destroy(Laboratorio $laboratorio)
     {
-        $laboratorio->delete();
+        try {
+            $laboratorio->delete();
 
-        return response()->json(["Registro" => $laboratorio, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('laboratorio.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

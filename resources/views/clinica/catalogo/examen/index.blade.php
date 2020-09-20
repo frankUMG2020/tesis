@@ -1,8 +1,8 @@
 @extends('adminlte::page')
 @section('content_header')
     <h2>
-      Carrera
-      <a href="{{ route('carrera.create') }}" class="btn btn-info">Nuevo</a>       
+      Exámenes
+      <a href="{{ route('examen.create') }}" class="btn btn-info">Nuevo</a>       
     </h2>
 
     @if(Session::has('success'))
@@ -16,6 +16,12 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Advertencia!</h5>
         {{Session::get('warning')}}
+      </div>
+    @elseif(Session::has('danger'))
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Advertencia!</h5>
+        {{Session::get('danger')}}
       </div>
     @elseif(Session::has('info'))
       <div class="alert alert-info alert-dismissible">
@@ -34,7 +40,7 @@
           <h3 class="card-title">Información registrada</h3>
 
           <div class="card-tools">
-            <form action="{{ route('carrera.index') }}" method="get" role="search">
+            <form action="{{ route('examen.index') }}" method="get" role="search">
               {{ csrf_field() }}
               <div class="input-group input-group-sm" style="width: 450px;">
                 <input type="text" name="buscar" class="form-control float-right" placeholder="Buscar">
@@ -52,6 +58,8 @@
             <thead>
               <tr>
                 <th>#</th>
+                <th>Categoría</th>
+                <th>Laboratorio</th>
                 <th>Nombre</th>
                 <th>Fecha de ingreso</th>
                 <th>Opciones</th>
@@ -62,11 +70,13 @@
                 @foreach($values as $value)  
                 <tr>
                   <td>{{$value->id}}</td>
+                  <td>{{$value->categoria_examen->nombre}}</td>
+                  <td>{{$value->laboratorio->nombre}}</td>
                   <td>{{$value->nombre}}</td>
                   <td>{{$value->created_at}}</td>
                   <td>
-                    <form action="{{ route('carrera.destroy', $value) }}" method="post">
-                      <a class="btn btn-outline-warning" href="{{ route('carrera.edit', $value) }}" ><span class="fa fa-pencil-alt"></span></a>
+                    <form action="{{ route('examen.destroy', $value) }}" method="post">
+                      <a class="btn btn-outline-warning" href="{{ route('examen.edit', $value) }}" ><span class="fa fa-pencil-alt"></span></a>
                       {{csrf_field()}}
                       <input name="_method" type="hidden" value="DELETE">
                       <button class="btn btn-outline-danger" type="submit"><span class="fa fa-trash-alt"></span></button>
@@ -76,7 +86,7 @@
                @endforeach 
                @else
                <tr>
-                <td colspan="4">
+                <td colspan="6">
                   <div class="callout callout-danger"><h5>Mensaje</h5><p>¡No hay información para mostrar!</p></div>
                 </td>
               </tr>

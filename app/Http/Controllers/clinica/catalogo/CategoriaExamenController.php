@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\catalogo\CategoriaExamen;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\CategoriaExamen;
 
 class CategoriaExamenController extends Controller
 {
@@ -13,11 +14,22 @@ class CategoriaExamenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = CategoriaExamen::with('examenes')->orderBy('nombre')->get();
+        try {
+            if (isset($request->buscar))
+                $values = CategoriaExamen::search($request->buscar)->paginate(10);
+            else
+                $values = CategoriaExamen::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.categoria_examen.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }  
     }
 
     /**
@@ -27,7 +39,15 @@ class CategoriaExamenController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.categoria_examen.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }   
     }
 
     /**
@@ -38,11 +58,19 @@ class CategoriaExamenController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new CategoriaExamen();
-        $insert->nombre = $request->nombre;
-        $insert->save();
+        try {
+            $insert = new CategoriaExamen();
+            $insert->nombre = $request->nombre;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('categoriaExamen.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('categoriaExamen.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('categoriaExamen.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +81,14 @@ class CategoriaExamenController extends Controller
      */
     public function show(CategoriaExamen $categoriaExaman)
     {
-        //
+        try {
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +99,15 @@ class CategoriaExamenController extends Controller
      */
     public function edit(CategoriaExamen $categoriaExaman)
     {
-        //
+        try {
+            return view('clinica.catalogo.categoria_examen.edit', ['valor' => $categoriaExaman]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +119,22 @@ class CategoriaExamenController extends Controller
      */
     public function update(Request $request, CategoriaExamen $categoriaExaman)
     {
-        $categoriaExaman->nombre = $request->nombre;
-        $categoriaExaman->save();
+        try {
+            $categoriaExaman->nombre = $request->nombre;
 
-        return response()->json(["Registro" => $categoriaExaman, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$categoriaExaman->isDirty())
+                return redirect()->route('categoriaExamen.edit', $categoriaExaman->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $categoriaExaman->save();
+
+            return redirect()->route('categoriaExamen.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('categoriaExamen.edit', $categoriaExaman->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('categoriaExamen.edit', $categoriaExaman->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +145,16 @@ class CategoriaExamenController extends Controller
      */
     public function destroy(CategoriaExamen $categoriaExaman)
     {
-        $categoriaExaman->delete();
-        
-        return response()->json(["Registro" => $categoriaExaman, "Mensaje" => "Felicidades eliminaste"]);
+        try {
+            $categoriaExaman->delete();
+
+            return redirect()->route('categoriaExamen.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }
