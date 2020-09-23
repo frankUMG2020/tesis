@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\clinica\catalogo\Parto;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class PartoController extends Controller
 {
@@ -13,11 +14,22 @@ class PartoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = Parto::get();
+        try {
+            if (isset($request->buscar))
+                $values = Parto::search($request->buscar)->paginate(10);
+            else
+                $values = Parto::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.parto.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -27,7 +39,15 @@ class PartoController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.parto.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,11 +58,19 @@ class PartoController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new Parto();
-        $insert->nombre = $request->nombre;
-        $insert->save();
+        try {
+            $insert = new Parto();
+            $insert->nombre = $request->nombre;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('parto.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('parto.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('parto.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +81,15 @@ class PartoController extends Controller
      */
     public function show(Parto $parto)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +100,15 @@ class PartoController extends Controller
      */
     public function edit(Parto $parto)
     {
-        //
+        try {
+            return view('clinica.catalogo.parto.edit', compact('parto'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +120,22 @@ class PartoController extends Controller
      */
     public function update(Request $request, Parto $parto)
     {
-        $parto->nombre = $request->nombre;
-        $parto->save();
+        try {
+            $parto->nombre = $request->nombre;
 
-        return response()->json(["Registro" => $parto, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$parto->isDirty())
+                return redirect()->route('parto.edit', $parto->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $parto->save();
+
+            return redirect()->route('parto.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('parto.edit', $parto->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('parto.edit', $parto->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +146,16 @@ class PartoController extends Controller
      */
     public function destroy(Parto $parto)
     {
-        $parto->delete();
+        try {
+            $parto->delete();
 
-        return response()->json(["Registro" => $parto, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('parto.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

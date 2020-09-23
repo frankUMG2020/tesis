@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\catalogo\ConfiguracionEnfermedad;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\ConfiguracionEnfermedad;
 
 class ConfiguracionEnfermedadController extends Controller
 {
@@ -13,11 +14,22 @@ class ConfiguracionEnfermedadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = ConfiguracionEnfermedad::get();
-        
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        try {
+            if (isset($request->buscar))
+                $values = ConfiguracionEnfermedad::search($request->buscar)->paginate(10);
+            else
+                $values = ConfiguracionEnfermedad::paginate(10);
+
+            return view('clinica.catalogo.configuracion_enfermedad.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -27,7 +39,15 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.configuracion_enfermedad.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -38,11 +58,19 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new ConfiguracionEnfermedad();
-        $insert->nombre = $request->nombre;
-        $insert->save();
-        
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+        try {
+            $insert = new ConfiguracionEnfermedad();
+            $insert->nombre = $request->nombre;
+            $insert->save();
+
+            return redirect()->route('configuracionEnfermedad.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('configuracionEnfermedad.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('configuracionEnfermedad.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +81,15 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function show(ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +100,15 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function edit(ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        //
+        try {
+            return view('clinica.catalogo.configuracion_enfermedad.edit', compact('configuracionEnfermedad'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +120,22 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function update(Request $request, ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        $configuracionEnfermedad->nombre = $request->nombre;
-        $configuracionEnfermedad->save();
+        try {
+            $configuracionEnfermedad->nombre = $request->nombre;
 
-        return response()->json(["Registro" => $configuracionEnfermedad, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$configuracionEnfermedad->isDirty())
+                return redirect()->route('configuracionEnfermedad.edit', $configuracionEnfermedad->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $configuracionEnfermedad->save();
+
+            return redirect()->route('configuracionEnfermedad.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('configuracionEnfermedad.edit', $configuracionEnfermedad->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('configuracionEnfermedad.edit', $configuracionEnfermedad->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +146,16 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function destroy(ConfiguracionEnfermedad $configuracionEnfermedad)
     {
-        $configuracionEnfermedad->delete();
+        try {
+            $configuracionEnfermedad->delete();
 
-        return response()->json(["Registro" => $configuracionEnfermedad, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('configuracionEnfermedad.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\catalogo\TipoCita;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\TipoCita;
 
 class TipoCitaController extends Controller
 {
@@ -13,11 +14,22 @@ class TipoCitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = TipoCita::get();
+        try {
+            if (isset($request->buscar))
+                $values = TipoCita::search($request->buscar)->paginate(10);
+            else
+                $values = TipoCita::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.tipo_cita.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -27,7 +39,15 @@ class TipoCitaController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.tipo_cita.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,12 +58,20 @@ class TipoCitaController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new TipoCita();
-        $insert->nombre = $request->nombre;
-        $insert->color = $request->color;
-        $insert->save();
+        try {
+            $insert = new TipoCita();
+            $insert->nombre = $request->nombre;
+            $insert->color = $request->color;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('tipoCita.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('tipoCita.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('tipoCita.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -54,34 +82,62 @@ class TipoCitaController extends Controller
      */
     public function show(TipoCita $tipoCita)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\clinica\catalogo\TipoCita  $tipoCita
+     * @param  \App\Models\clinica\catalogo\TipoCita  $tipoCitum
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoCita $tipoCita)
+    public function edit(TipoCita $tipoCitum)
     {
-        //
+        try {
+            return view('clinica.catalogo.tipo_cita.edit', compact('tipoCitum'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\clinica\catalogo\TipoCita  $tipoCita
+     * @param  \App\Models\clinica\catalogo\TipoCita  $tipoCitum
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoCita $tipoCita)
+    public function update(Request $request, TipoCita $tipoCitum)
     {
-        $tipoCita->nombre = $request->nombre;
-        $tipoCita->color = $request->color;
-        $tipoCita->save();
+        try {
+            $tipoCitum->nombre = $request->nombre;
+            $tipoCitum->color = $request->color;
 
-        return response()->json(["Registro" => $tipoCita, "Mensaje" => "Felicidades Actualizaste"]);
+            if (!$tipoCitum->isDirty())
+                return redirect()->route('tipoCita.edit', $tipoCitum->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $tipoCitum->save();
+
+            return redirect()->route('tipoCita.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('tipoCita.edit', $tipoCitum->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('tipoCita.edit', $tipoCitum->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,11 +146,18 @@ class TipoCitaController extends Controller
      * @param  \App\Models\clinica\catalogo\TipoCita  $tipoCita
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoCita $tipoCita)
+    public function destroy(TipoCita $tipoCitum)
     {
-        $tipoCita->delete();
+        try {
+            $tipoCitum->delete();
 
-        return response()->json(["Registro" => $tipoCita, "Mensaje" => "Felicidades Eliminaste"]);
-
+            return redirect()->route('tipoCita.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

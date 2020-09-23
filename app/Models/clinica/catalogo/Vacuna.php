@@ -3,9 +3,17 @@
 namespace App\Models\clinica\catalogo;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Vacuna extends Model
 {
+    use SearchableTrait;
+
+    protected $searchable = [
+        'columns' => [
+            'vacuna.nombre' => 15,
+        ]
+    ];
     protected $table = 'vacuna';
     /**
      * The attributes that are mass assignable.

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\catalogo\TipoSangre;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\TipoSangre;
 
 class TipoSangreController extends Controller
 {
@@ -13,11 +14,22 @@ class TipoSangreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = TipoSangre::get();
+        try {
+            if (isset($request->buscar))
+                $values = TipoSangre::search($request->buscar)->paginate(10);
+            else
+                $values = TipoSangre::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.tipo_sangre.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -27,7 +39,15 @@ class TipoSangreController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.tipo_sangre.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -38,11 +58,19 @@ class TipoSangreController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new TipoSangre();
-        $insert->nombre = $request->nombre;
-        $insert->save();
+        try {
+            $insert = new TipoSangre();
+            $insert->nombre = $request->nombre;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('tipoSangre.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('tipoSangre.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('tipoSangre.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +81,15 @@ class TipoSangreController extends Controller
      */
     public function show(TipoSangre $tipoSangre)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +100,15 @@ class TipoSangreController extends Controller
      */
     public function edit(TipoSangre $tipoSangre)
     {
-        //
+        try {
+            return view('clinica.catalogo.tipo_sangre.edit', compact('tipoSangre'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +120,22 @@ class TipoSangreController extends Controller
      */
     public function update(Request $request, TipoSangre $tipoSangre)
     {
-        $tipoSangre->nombre = $request->nombre;
-        $tipoSangre->save();
+        try {
+            $tipoSangre->nombre = $request->nombre;
 
-        return response()->json(["Registro" => $tipoSangre, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$tipoSangre->isDirty())
+                return redirect()->route('tipoSangre.edit', $tipoSangre->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $tipoSangre->save();
+
+            return redirect()->route('tipoSangre.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('tipoSangre.edit', $tipoSangre->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('tipoSangre.edit', $tipoSangre->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +146,16 @@ class TipoSangreController extends Controller
      */
     public function destroy(TipoSangre $tipoSangre)
     {
-        $tipoSangre->delete();
+        try {
+            $tipoSangre->delete();
 
-        return response()->json(["Registro" => $tipoSangre, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('tipoSangre.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

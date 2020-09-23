@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\catalogo;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\clinica\catalogo\Vacuna;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class VacunaController extends Controller
 {
@@ -13,11 +14,22 @@ class VacunaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = Vacuna::get();
+        try {
+            if (isset($request->buscar))
+                $values = Vacuna::search($request->buscar)->paginate(10);
+            else
+                $values = Vacuna::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.vacuna.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -27,7 +39,15 @@ class VacunaController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.vacuna.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,12 +58,20 @@ class VacunaController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new Vacuna();
-        $insert->nombre = $request->nombre;
-        $insert->dosis = $request->dosis;
-        $insert->save();
+        try {
+            $insert = new Vacuna();
+            $insert->nombre = $request->nombre;
+            $insert->dosis = $request->dosis;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('vacuna.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('vacuna.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('vacuna.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -54,7 +82,15 @@ class VacunaController extends Controller
      */
     public function show(Vacuna $vacuna)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -65,7 +101,15 @@ class VacunaController extends Controller
      */
     public function edit(Vacuna $vacuna)
     {
-        //
+        try {
+            return view('clinica.catalogo.vacuna.edit', compact('vacuna'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -77,11 +121,23 @@ class VacunaController extends Controller
      */
     public function update(Request $request, Vacuna $vacuna)
     {
-        $vacuna->nombre = $request->nombre;
-        $vacuna->dosis = $request->dosis;
-        $vacuna->save();
+        try {
+            $vacuna->nombre = $request->nombre;
+            $vacuna->dosis = $request->dosis;
 
-        return response()->json(["Registro" => $vacuna, "Mensaje" => "Felicidades actualizaste"]);
+            if (!$vacuna->isDirty())
+                return redirect()->route('vacuna.edit', $vacuna->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $vacuna->save();
+
+            return redirect()->route('vacuna.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('vacuna.edit', $vacuna->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('vacuna.edit', $vacuna->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -92,8 +148,16 @@ class VacunaController extends Controller
      */
     public function destroy(Vacuna $vacuna)
     {
-        $vacuna->delete();
+        try {
+            $vacuna->delete();
 
-        return response()->json(["Registro" => $vacuna, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('vacuna.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }
