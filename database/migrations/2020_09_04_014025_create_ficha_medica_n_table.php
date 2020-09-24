@@ -20,7 +20,7 @@ class CreateFichaMedicaNTable extends Migration
             $table->string('madre')->nullable();
             $table->string('referido')->nullable();
             $table->string('email')->nullable();
-            $table->string('lugar_nacimiento');
+            $table->string('lugar_nacimiento')->nullable();
             $table->longText('foto')->nullable();
 
             $table->unsignedBigInteger('municipio_id');

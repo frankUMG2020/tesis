@@ -17,6 +17,12 @@ class Municipio extends Model
         'nombre','departamento_id'
     ];
 
+    public function nombreCompleto()
+    {
+        $departamento = Departamento::find($this->departamento_id);
+        return "{$departamento->nombre}, {$this->nombre}";
+    }
+
     public function departamento()
     {
         return $this->belongsTo(Departamento::class, 'departamento_id', 'id')->orderby('nombre');

@@ -49,10 +49,10 @@ return [
     |
     */
 
-    'layout_topnav' => null,
-    'layout_boxed' => null,
+    'layout_topnav' => false,
+    'layout_boxed' => false,
     'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => false,
     'layout_fixed_footer' => null,
 
     /*
@@ -221,8 +221,8 @@ return [
             'icon'    => 'fas fa-fw fa-laptop',
             'submenu' => [
                 [
-                    'text' => 'Alumno',
-                    'url'  => 'alumno',
+                    'text' => 'Ficha Médica Niño',
+                    'url'  => 'fichaMedicaN',
                 ],
                 [
                     'text' => 'Catedrático',
@@ -295,16 +295,16 @@ return [
         ],
         [
             'name' => 'Select2',
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => 'js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => 'css/select2.css',
                 ],
             ],

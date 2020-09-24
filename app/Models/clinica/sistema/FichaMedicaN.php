@@ -2,7 +2,15 @@
 
 namespace App\Models\clinica\sistema;
 
+use App\Models\clinica\catalogo\Alimentacion;
+use App\Models\clinica\catalogo\Parto;
+use App\Models\clinica\sistema\Persona;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\clinica\catalogo\Municipio;
+use App\Models\clinica\sistema\TelefonoFMN;
+use App\Models\clinica\sistema\DireccionFMA;
+use App\Models\clinica\sistema\HistorialFMN;
+use App\Models\clinica\sistema\CalendarioFMA;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class FichaMedicaN extends Model
@@ -27,6 +35,11 @@ class FichaMedicaN extends Model
         'persona_id','parto_id','alimentacion_id'
     ];
 
+    public function fechaFormato()
+    {
+        return date('d-m-Y', strtotime($this->fecha));
+    }
+
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
@@ -40,6 +53,11 @@ class FichaMedicaN extends Model
     public function parto()
     {
         return $this->belongsTo(Parto::class, 'parto_id', 'id');
+    }
+
+    public function alimentacion()
+    {
+        return $this->belongsTo(Alimentacion::class, 'alimentacion_id', 'id');
     }
 
     public function telefonos()

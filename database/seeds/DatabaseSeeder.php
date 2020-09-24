@@ -3,6 +3,15 @@
 use Illuminate\Database\Seeder;
 use App\Imports\MunicipioImport;
 use App\Imports\DepartamentoImport;
+use App\Models\clinica\catalogo\Alimentacion;
+use App\Models\clinica\catalogo\CategoriaExamen;
+use App\Models\clinica\catalogo\ConfiguracionEnfermedad;
+use App\Models\clinica\catalogo\Examen;
+use App\Models\clinica\catalogo\Laboratorio;
+use App\Models\clinica\catalogo\Parto;
+use App\Models\clinica\catalogo\TipoCita;
+use App\Models\clinica\catalogo\TipoSangre;
+use App\Models\clinica\catalogo\Vacuna;
 use App\Models\clinica\seguridad\Rol;
 use App\Models\clinica\seguridad\Usuario;
 use App\Models\clinica\sistema\Persona;
@@ -18,6 +27,103 @@ class DatabaseSeeder extends Seeder
     {
         \Excel::import(new DepartamentoImport, 'database/excel/Departamentos.xlsx');
         \Excel::import(new MunicipioImport, 'database/excel/Municipios.xlsx');
+
+        $alimentacion = new Alimentacion();
+        $alimentacion->nombre = 'Leche';
+        $alimentacion->save();
+
+        $alimentacion = new Alimentacion();
+        $alimentacion->nombre = 'Frijol';
+        $alimentacion->save();
+
+        $alimentacion = new Alimentacion();
+        $alimentacion->nombre = 'Arroz';
+        $alimentacion->save();
+
+        $alimentacion = new Alimentacion();
+        $alimentacion->nombre = 'Incaparina';
+        $alimentacion->save();
+
+        $categoria_examen = new CategoriaExamen();
+        $categoria_examen->nombre = 'Categoria 1';
+        $categoria_examen->save();
+
+        $categoria_examen = new CategoriaExamen();
+        $categoria_examen->nombre = 'Categoria 2';
+        $categoria_examen->save();
+
+        $configuracion_enfermedad = new ConfiguracionEnfermedad();
+        $configuracion_enfermedad->nombre = 'Enfermedad 1';
+        $configuracion_enfermedad->save();
+
+        $configuracion_enfermedad = new ConfiguracionEnfermedad();
+        $configuracion_enfermedad->nombre = 'Enfermedad 2';
+        $configuracion_enfermedad->save();
+
+        $laboratorio = new Laboratorio();
+        $laboratorio->nombre = 'Laboratorio 1';
+        $laboratorio->save();
+
+        $laboratorio = new Laboratorio();
+        $laboratorio->nombre = 'Laboratorio 2';
+        $laboratorio->save();
+
+        $categorias_examenes = CategoriaExamen::all();
+
+        foreach ($categorias_examenes as $value) {
+            
+            $laboratorios = Laboratorio::all();
+
+            foreach ($laboratorios as $lab) {
+                
+                for ($i=0; $i < 50; $i++) { 
+                    $examen = new Examen();
+                    $examen->nombre = "Examen {$value->id}.{$lab->id}.{$i}";
+                    $examen->laboratorio_id = $lab->id;
+                    $examen->categoria_examen_id = $value->id;
+                    $examen->save();
+                }
+
+            }
+        }
+
+        $parto = new Parto();
+        $parto->nombre = 'Normal';
+        $parto->save();
+
+        $parto = new Parto();
+        $parto->nombre = 'Cesarea';
+        $parto->save();
+
+        $tipo_cita = new TipoCita();
+        $tipo_cita->nombre = 'Normal';
+        $tipo_cita->color = 'success';
+        $tipo_cita->save();
+
+        $tipo_cita = new TipoCita();
+        $tipo_cita->nombre = 'Emergencia';
+        $tipo_cita->color = 'danger';
+        $tipo_cita->save();
+
+        $tipo_cita = new TipoCita();
+        $tipo_cita->nombre = 'EPPS';
+        $tipo_cita->color = 'primary';
+        $tipo_cita->save();
+
+        $tipo_sangre = new TipoSangre();
+        $tipo_sangre->nombre = 'O+';
+        $tipo_sangre->save();
+
+        $tipo_sangre = new TipoSangre();
+        $tipo_sangre->nombre = 'O-';
+        $tipo_sangre->save();
+
+        for ($i=0; $i < 20; $i++) { 
+            $vacuna = new Vacuna();
+            $vacuna->nombre = "Vacuna {$i}";
+            $vacuna->dosis = random_int(1,10);
+            $vacuna->save();
+        }
 
         $insert = new Rol();
         $insert->nombre = 'Administrador';

@@ -58,6 +58,13 @@ class PartoController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:15|unique:parto,nombre'
+            ]
+        );
+
         try {
             $insert = new Parto();
             $insert->nombre = $request->nombre;
@@ -120,6 +127,13 @@ class PartoController extends Controller
      */
     public function update(Request $request, Parto $parto)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:15|unique:parto,nombre,id,'.$parto->id
+            ]
+        );
+
         try {
             $parto->nombre = $request->nombre;
 
