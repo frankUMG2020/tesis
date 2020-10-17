@@ -58,6 +58,12 @@ class AlimentacionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+            ]
+        );
         try {
             $insert = new Alimentacion();
             $insert->nombre = $request->nombre;
@@ -120,6 +126,13 @@ class AlimentacionController extends Controller
      */
     public function update(Request $request, Alimentacion $alimentacion)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$alimentacion->id
+            ]
+        );
+
         try {
             $alimentacion->nombre = $request->nombre;
 

@@ -63,6 +63,15 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+                'laboratorio_id' => 'required|integer|exists:laboratorio,id',
+                'categoria_examen_id' => 'required|integer|exists:categoria_examen,id',
+            ]
+        );
+
         try {
             $insert = new Examen();
             $insert->nombre = $request->nombre;
@@ -129,6 +138,15 @@ class ExamenController extends Controller
      */
     public function update(Request $request, Examen $examan)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$examan->id,
+                'laboratorio_id' => 'required|integer|exists:laboratorio,id'.$examan->id,
+                'categoria_examen_id' => 'required|integer|exists:categoria_examen,id'.$examan->id,
+            ]
+        );
+        
         try {
             $examan->nombre = $request->nombre;
             $examan->laboratorio_id = $request->laboratorio_id;

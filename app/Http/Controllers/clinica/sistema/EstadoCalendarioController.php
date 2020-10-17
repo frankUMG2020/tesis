@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\EstadoCalendario;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\sistema\EstadoCalendario;
 
 class EstadoCalendarioController extends Controller
 {
@@ -13,11 +14,22 @@ class EstadoCalendarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = EstadoCalendario::get();
+        try {
+            if (isset($request->buscar))
+                $values = EstadoCalendario::search($request->buscar)->paginate(10);
+            else
+                $values = EstadoCalendario::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+            return view('clinica.catalogo.estadoCalendario.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -27,7 +39,15 @@ class EstadoCalendarioController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.estadoCalendario.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,11 +58,25 @@ class EstadoCalendarioController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new EstadoCalendario();
-        $insert->nombre = $request->nombre;
-        $insert->save();
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+            ]
+        );
+        try {
+            $insert = new EstadoCalendario();
+            $insert->nombre = $request->nombre;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
+            return redirect()->route('estadoCalendario.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('estadoCalendario.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('estadoCalendario.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +87,15 @@ class EstadoCalendarioController extends Controller
      */
     public function show(EstadoCalendario $estadoCalendario)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +106,15 @@ class EstadoCalendarioController extends Controller
      */
     public function edit(EstadoCalendario $estadoCalendario)
     {
-        //
+        try {
+            return view('clinica.catalogo.estadoCalendario.edit', compact('estadoCalendario'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +126,29 @@ class EstadoCalendarioController extends Controller
      */
     public function update(Request $request, EstadoCalendario $estadoCalendario)
     {
-        $estadoCalendario->nombre = $estadoCalendario->nombre;
-        $estadoCalendario->save();
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$estadoCalendario->id
+            ]
+        );
 
-        return response()->json(["Registro" => $estadoCalendario, "Mensaje" => "Felicidades Actualizaste"]);
+        try {
+            $estadoCalendario->nombre = $request->nombre;
+
+            if (!$estadoCalendario->isDirty())
+                return redirect()->route('estadoCalendario.edit', $estadoCalendario->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $estadoCalendario->save();
+
+            return redirect()->route('estadoCalendario.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('estadoCalendario.edit', $estadoCalendario->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('estadoCalendario.edit', $estadoCalendario->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +159,16 @@ class EstadoCalendarioController extends Controller
      */
     public function destroy(EstadoCalendario $estadoCalendario)
     {
-        $estadoCalendario->delete();
+        try {
+            $estadoCalendario->delete();
 
-        return response()->json(["Registro" => $estadoCalendario, "Mensaje" => "Felicidades Eliminaste"]);
+            return redirect()->route('estadoCalendario.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

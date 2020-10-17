@@ -3,9 +3,20 @@
 namespace App\Models\clinica\sistema;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Perfil extends Model
 {
+    use SearchableTrait;
+    
+    protected $searchable = [
+        'columns' => [
+            'perfil.nombre' => 15
+        ],
+        'joins' => [
+            'instruccion_perfil' => ['perfil.instruccion_perfil_id', 'instruccion_perfil.id']
+        ]
+    ];
     protected $table = 'perfil';
     /**
      * The attributes that are mass assignable.

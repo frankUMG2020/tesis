@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\Perfil;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\clinica\sistema\InstruccionPerfil;
+use App\Models\clinica\sistema\Perfil;
+use Illuminate\Database\QueryException;
 
 class PerfilController extends Controller
 {
@@ -13,11 +15,22 @@ class PerfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $values = Perfil::get();
+        try {
+            if (isset($request->buscar))
+                $values = Perfil::search($request->buscar)->paginate(10);
+            else
+                $values = Perfil::paginate(10);
 
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades Accediste a datos"]);
+            return view('clinica.catalogo.perfil.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -27,7 +40,17 @@ class PerfilController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $instruccionPerfil = InstruccionPerfil::all();
+
+            return view('clinica.catalogo.perfil.create', compact('instruccionPerfil'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,12 +61,28 @@ class PerfilController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new Perfil();
-        $insert->nombre = $request->nombre;
-        $insert->instruccion_perfil_id = $request->instruccion_perfil_id;
-        $insert->save();
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+                'instruccion_perfil_id' => 'required|integer|exists:instruccion_perfil,id',
+            ]
+        );
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+        try {
+            $insert = new Perfil();
+            $insert->nombre = $request->nombre;
+            $insert->instruccion_perfil_id = $request->instruccion_perfil_id;
+            $insert->save();
+
+            return redirect()->route('perfil.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('perfil.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('perfil.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -54,7 +93,14 @@ class PerfilController extends Controller
      */
     public function show(Perfil $perfil)
     {
-        //
+        try {
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -65,7 +111,17 @@ class PerfilController extends Controller
      */
     public function edit(Perfil $perfil)
     {
-        //
+        try {
+            $instruccionPerfil = InstruccionPerfil::all();
+
+            return view('clinica.catalogo.perfil.edit', ['valor' => $perfil, 'instruccionPerfil' => $instruccionPerfil]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -77,11 +133,31 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
-        $perfil->nombre = $request->nombre;
-        $perfil->instruccion_perfil_id = $request->instruccion_perfil_id;
-        $perfil->save();
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$perfil->id,
+                'instruccion_perfil_id' => 'required|integer|exists:instruccion_perfil,id'.$perfil->id,    
+            ]
+        );
 
-        return response()->json(["Registro" => $perfil, "Mensaje" => "Felicidades actualizaste"]);
+        try {
+            $perfil->nombre = $request->nombre;
+            $perfil->instruccion_perfil_id = $request->instruccion_perfil_id;
+
+            if (!$perfil->isDirty())
+                return redirect()->route('perfil.edit', $perfil->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $perfil->save();
+
+            return redirect()->route('perfil.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('perfil.edit', $perfil->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('perfil.edit', $perfil->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -92,8 +168,16 @@ class PerfilController extends Controller
      */
     public function destroy(Perfil $perfil)
     {
-        $perfil->delete();
+        try {
+            $perfil->delete();
 
-        return response()->json(["Registro" => $perfil, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('perfil.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

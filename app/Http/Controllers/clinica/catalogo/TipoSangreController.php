@@ -58,6 +58,13 @@ class TipoSangreController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'
+            ]
+        );
+
         try {
             $insert = new TipoSangre();
             $insert->nombre = $request->nombre;
@@ -120,6 +127,13 @@ class TipoSangreController extends Controller
      */
     public function update(Request $request, TipoSangre $tipoSangre)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$tipoSangre->id
+            ]
+        );
+
         try {
             $tipoSangre->nombre = $request->nombre;
 

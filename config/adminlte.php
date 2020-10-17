@@ -191,8 +191,20 @@ return [
                     'url'  => 'configuracionEnfermedad',
                 ],
                 [
+                    'text' => 'Estado del Calendario',
+                    'url'  => 'estadoCalendario',
+                ],
+                [
                     'text' => 'Examen',
                     'url'  => 'examen',
+                ],
+                [
+                    'text' => 'Inmunción',
+                    'url'  => 'inmuncion',
+                ],
+                [
+                    'text' => 'Instrucción Perfil',
+                    'url'  => 'instruccionPerfil',
                 ],
                 [
                     'text' => 'Laboratorio',
@@ -201,6 +213,14 @@ return [
                 [
                     'text' => 'Parto',
                     'url'  => 'parto',
+                ],
+                [
+                    'text' => 'Perfil',
+                    'url'  => 'perfil',
+                ],
+                [
+                    'text' => 'Perfil Examen',
+                    'url'  => 'perfilExamen',
                 ],
                 [
                     'text' => 'Tipo de Cita',
@@ -223,10 +243,6 @@ return [
                 [
                     'text' => 'Ficha Médica Niño',
                     'url'  => 'fichaMedicaN',
-                ],
-                [
-                    'text' => 'Catedrático',
-                    'url'  => 'catedratico',
                 ]
             ],
         ],

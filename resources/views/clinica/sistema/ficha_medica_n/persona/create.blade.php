@@ -60,8 +60,8 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-4">
                   <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de Nacimiento del Alumno</label>
-                    <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-alternative{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir la fecha de nacimiento del alumno" value="{{ old('fecha_nacimiento') }}">
+                    <label for="fecha_nacimiento">Fecha de Nacimiento del Paciente</label>
+                    <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-alternative{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir la fecha de nacimiento del paciente" value="{{ old('fecha_nacimiento') }}">
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4">

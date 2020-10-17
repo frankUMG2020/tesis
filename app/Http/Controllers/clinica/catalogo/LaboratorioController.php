@@ -58,6 +58,15 @@ class LaboratorioController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+                'direccion' => 'required|max:100',
+                'telefono' => 'required|digits_between:8,8'
+            ]
+        );
+
         try {
             $insert = new Laboratorio();
             $insert->nombre = $request->nombre;
@@ -121,6 +130,15 @@ class LaboratorioController extends Controller
      */
     public function update(Request $request, Laboratorio $laboratorio)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$laboratorio->id,
+                'direccion' => 'required|max:100'.$laboratorio->id,
+                'telefono' => 'required|digits_between:8,8'.$laboratorio->id
+            ]
+        );
+        
         try {
             $laboratorio->nombre = $request->nombre;
             $laboratorio->direccion = $request->direccion;

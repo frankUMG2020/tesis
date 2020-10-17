@@ -58,6 +58,14 @@ class VacunaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+                'dosis' => 'required|integer|digits_between:1,1'
+            ]
+        );
+
         try {
             $insert = new Vacuna();
             $insert->nombre = $request->nombre;

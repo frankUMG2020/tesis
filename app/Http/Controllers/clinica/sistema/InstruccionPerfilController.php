@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\InstruccionPerfil;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\sistema\InstruccionPerfil;
 
 class InstruccionPerfilController extends Controller
 {
@@ -13,8 +14,22 @@ class InstruccionPerfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        try {
+            if (isset($request->buscar))
+                $values = InstruccionPerfil::search($request->buscar)->paginate(10);
+            else
+                $values = InstruccionPerfil::paginate(10);
+
+            return view('clinica.catalogo.instruccion_perfil.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
         $values = InstruccionPerfil::get();
 
         return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
@@ -27,7 +42,15 @@ class InstruccionPerfilController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('clinica.catalogo.instruccion_perfil.create');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -38,11 +61,25 @@ class InstruccionPerfilController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new InstruccionPerfil();
-        $insert->descripcion = $request->descripcion;
-        $insert->save();
+        $this->validate(
+            $request,
+            [
+                'descripcion' => 'required|max:100',
+            ]
+        );
+        try {
+            $insert = new InstruccionPerfil();
+            $insert->descripcion = $request->descripcion;
+            $insert->save();
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+            return redirect()->route('instruccionPerfil.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('instruccionPerfil.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('instruccionPerfil.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -53,7 +90,15 @@ class InstruccionPerfilController extends Controller
      */
     public function show(InstruccionPerfil $instruccionPerfil)
     {
-        //
+        try {
+            
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -64,7 +109,15 @@ class InstruccionPerfilController extends Controller
      */
     public function edit(InstruccionPerfil $instruccionPerfil)
     {
-        //
+        try {
+            return view('clinica.catalogo.instruccion_perfil.edit', compact('instruccionPerfil'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -76,10 +129,29 @@ class InstruccionPerfilController extends Controller
      */
     public function update(Request $request, InstruccionPerfil $instruccionPerfil)
     {
-        $instruccionPerfil->descripcion = $request->descripcion;
-        $instruccionPerfil->save();
+        $this->validate(
+            $request,
+            [
+                'descripcion' => 'required|max:100'.$instruccionPerfil->id
+            ]
+        );
 
-        return response()->json(["Registro" => $instruccionPerfil, "Mensaje" => "Felicidades actualizaste"]);
+        try {
+            $instruccionPerfil->descripcion = $request->descripcion;
+
+            if (!$instruccionPerfil->isDirty())
+                return redirect()->route('instruccionPerfil.edit', $instruccionPerfil->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $instruccionPerfil->save();
+
+            return redirect()->route('instruccionPerfil.index')->with('success', '¡Registro actualizado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if($th instanceof QueryException) {
+                return redirect()->route('instruccionPerfil.edit', $instruccionPerfil->id)->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('instruccionPerfil.edit', $instruccionPerfil->id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -90,8 +162,16 @@ class InstruccionPerfilController extends Controller
      */
     public function destroy(InstruccionPerfil $instruccionPerfil)
     {
-        $instruccionPerfil->delete();
+        try {
+            $instruccionPerfil->delete();
 
-        return response()->json(["Registro" => $instruccionPerfil, "Mensaje" => "Felicidades eliminaste"]);
+            return redirect()->route('instruccionPerfil.index')->with('info', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

@@ -58,6 +58,14 @@ class TipoCitaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+                'color' => 'required|max:30'
+            ]
+        );
+
         try {
             $insert = new TipoCita();
             $insert->nombre = $request->nombre;
@@ -121,6 +129,14 @@ class TipoCitaController extends Controller
      */
     public function update(Request $request, TipoCita $tipoCitum)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$tipoCitum->id,
+                'color' => 'required|max:30'.$tipoCitum->id
+            ]
+        );
+
         try {
             $tipoCitum->nombre = $request->nombre;
             $tipoCitum->color = $request->color;

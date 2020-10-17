@@ -58,6 +58,12 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+            ]
+        );
         try {
             $insert = new ConfiguracionEnfermedad();
             $insert->nombre = $request->nombre;
@@ -120,6 +126,12 @@ class ConfiguracionEnfermedadController extends Controller
      */
     public function update(Request $request, ConfiguracionEnfermedad $configuracionEnfermedad)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+            ]
+        );
         try {
             $configuracionEnfermedad->nombre = $request->nombre;
 

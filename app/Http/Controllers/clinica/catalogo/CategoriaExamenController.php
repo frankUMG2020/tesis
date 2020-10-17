@@ -58,6 +58,12 @@ class CategoriaExamenController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20',
+            ]
+        );
         try {
             $insert = new CategoriaExamen();
             $insert->nombre = $request->nombre;
@@ -119,6 +125,12 @@ class CategoriaExamenController extends Controller
      */
     public function update(Request $request, CategoriaExamen $categoriaExaman)
     {
+        $this->validate(
+            $request,
+            [
+                'nombre' => 'required|max:20'.$categoriaExaman->id
+            ]
+        );
         try {
             $categoriaExaman->nombre = $request->nombre;
 
