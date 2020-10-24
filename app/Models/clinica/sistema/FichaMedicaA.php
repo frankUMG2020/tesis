@@ -10,8 +10,10 @@ class FichaMedicaA extends Model
 {
     use SearchableTrait;
 
-    const SOLTERO = 'SOLTERO';
-    const CASADO = 'CASADO';
+    const Soltero = 'Soltero';
+    const Casado = 'Casado';
+    const Viudo = 'Viudo';
+    const Divorciado = 'Divorciado';
 
     protected $searchable = [
         'columns' => [
@@ -32,6 +34,11 @@ class FichaMedicaA extends Model
         'remitido', 'observacion', 'codigo_epps', 'cui',
         'tipo_sangre_id', 'persona_id'
     ];
+
+    public function fechaFormato()
+    {
+        return date('d-m-Y', strtotime($this->fecha));
+    }
 
     public function persona()
     {
