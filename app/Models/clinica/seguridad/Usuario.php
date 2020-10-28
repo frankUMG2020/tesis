@@ -2,11 +2,21 @@
 
 namespace App\Models\clinica\seguridad;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\clinica\sistema\Persona;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Usuario extends Authenticatable
 {
+    use SearchableTrait;
+
+    protected $searchable = [
+        'columns' => [
+            'usuario.nombre_completo' => 10,
+            'usuario.email' => 15,
+        ]
+    ];
+    
     protected $table = 'usuario';
     /**
      * The attributes that are mass assignable.

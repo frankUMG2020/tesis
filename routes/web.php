@@ -37,7 +37,6 @@ Route::resource('instruccionPerfil', 'clinica\sistema\InstruccionPerfilControlle
 Route::resource('estadoCalendario', 'clinica\sistema\EstadoCalendarioController');
 
 //Rutas que tiene información para usuarios y roles
-Route::resource('rol', 'clinica\seguridad\RolController');
 Route::resource('usuario', 'clinica\seguridad\UsuarioController');
 
 //Rutas que tienen información de tablas principales

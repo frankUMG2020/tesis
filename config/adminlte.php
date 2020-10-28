@@ -250,6 +250,7 @@ return [
         [
             'text'    => 'Usuarios',
             'icon'    => 'fas fa-fw fa-user',
+            'url'     => 'usuario'
         ],
     ],
 
