@@ -34,35 +34,36 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Nuevo registro</h3>
+        <h3 class="card-title">Editar registro</h3>
       </div>
       
       <div class="card-body">
-          <form method="POST" action="{{ route('fichaMedicaN.store') }}"  role="form">
+          <form method="POST" action="{{ route('fichaMedicaN.update', $fichaMedicaN) }}"  role="form">
             {{ csrf_field() }}
+            <input name="_method" type="hidden" value="PATCH">
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                   <label for="nombre_uno">Primer nombre del paciente</label>
-                  <input type="text" name="nombre_uno" id="nombre_uno" class="form-control form-control-alternative{{ $errors->has('nombre_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer nombre" value="{{ old('nombre_uno') }}">
+                  <input type="text" name="nombre_uno" id="nombre_uno" class="form-control form-control-alternative{{ $errors->has('nombre_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer nombre" value="{{ old('nombre_uno', $fichaMedicaN->persona->nombre_uno) }}">
                 </div>
               </div>                
               <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                   <label for="nombre_dos">Segundo nombre del paciente</label>
-                  <input type="text" name="nombre_dos" id="nombre_dos" class="form-control form-control-alternative{{ $errors->has('nombre_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo nombre" value="{{ old('nombre_dos') }}">
+                  <input type="text" name="nombre_dos" id="nombre_dos" class="form-control form-control-alternative{{ $errors->has('nombre_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo nombre" value="{{ old('nombre_dos', $fichaMedicaN->persona->nombre_dos) }}">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                   <label for="apellido_uno">Primer apellido del paciente</label>
-                  <input type="text" name="apellido_uno" id="apellido_uno" class="form-control form-control-alternative{{ $errors->has('apellido_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer apellido" value="{{ old('apellido_uno') }}">
+                  <input type="text" name="apellido_uno" id="apellido_uno" class="form-control form-control-alternative{{ $errors->has('apellido_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer apellido" value="{{ old('apellido_uno', $fichaMedicaN->persona->apellido_uno) }}">
                 </div>
               </div>                
               <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                   <label for="apellido_dos">Segundo apellido del paciente</label>
-                  <input type="text" name="apellido_dos" id="apellido_dos" class="form-control form-control-alternative{{ $errors->has('apellido_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo apellido" value="{{ old('apellido_dos') }}">
+                  <input type="text" name="apellido_dos" id="apellido_dos" class="form-control form-control-alternative{{ $errors->has('apellido_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo apellido" value="{{ old('apellido_dos', $fichaMedicaN->persona->apellido_dos) }}">
                 </div>
               </div>
             </div>
@@ -70,7 +71,7 @@
               <div class="col-xs-12 col-sm-12 col-md-4">
                 <div class="form-group">
                   <label for="fecha_nacimiento">Fecha de Nacimiento del Paciente</label>
-                  <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-alternative{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir la fecha de nacimiento del paciente" value="{{ old('fecha_nacimiento') }}">
+                  <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-alternative{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir la fecha de nacimiento del paciente" value="{{ old('fecha_nacimiento', date('d-m-Y', strtotime($fichaMedicaN->persona->fecha_nacimiento))) }}">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4">
@@ -79,8 +80,8 @@
                   <br>
                   <select name="sexo" id="input-sexo" class="js-example-basic-single form-control-alternative{{ $errors->has('sexo') ? ' is-invalid' : '' }}">
                       <option style="color: black;" value="">Seleccionar uno por favor</option>
-                      <option style="color: black;" value="Masculino">Masculino</option>
-                      <option style="color: black;" value="Femenino">Femenino</option>
+                      <option style="color: black;" value="Masculino" {{ ("Masculino" == old('sexo', $fichaMedicaN->persona->sexo)) ? 'selected' : '' }}>Masculino</option>
+                      <option style="color: black;" value="Femenino" {{ ("Femenino" == old('sexo', $fichaMedicaN->persona->sexo)) ? 'selected' : '' }}>Femenino</option>
                   </select>
                 </div>
               </div>
@@ -96,7 +97,7 @@
               <div class="col-xs-12 col-sm-12 col-md-2">
                 <div class="form-group">
                   <label for="fecha">Fecha de ingreso</label>
-                  <input type="text" name="fecha" id="fecha" class="form-control form-control-alternative{{ $errors->has('fecha') ? ' is-invalid' : '' }} input-sm" placeholder="Fecha de ingreso del paciente" value="{{ old('fecha') }}">
+                  <input type="text" name="fecha" id="fecha" class="form-control form-control-alternative{{ $errors->has('fecha') ? ' is-invalid' : '' }} input-sm" placeholder="Fecha de ingreso del paciente" value="{{ old('fecha', date('d-m-Y', strtotime($fichaMedicaN->fecha))) }}">
                 </div>
               </div>
             </div>
@@ -104,7 +105,7 @@
               <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                   <label for="padre">Nombre del padre</label>
-                  <input type="text" name="padre" id="padre" class="form-control form-control-alternative{{ $errors->has('padre') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre del padre" value="{{ old('padre') }}">
+                  <input type="text" name="padre" id="padre" class="form-control form-control-alternative{{ $errors->has('padre') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre del padre" value="{{ old('padre', $fichaMedicaN->padre) }}">
                 </div>
               </div>
             </div>
@@ -112,7 +113,7 @@
               <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                   <label for="madre">Nombre de la madre</label>
-                  <input type="text" name="madre" id="madre" class="form-control form-control-alternative{{ $errors->has('madre') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre de la madre" value="{{ old('madre') }}">
+                  <input type="text" name="madre" id="madre" class="form-control form-control-alternative{{ $errors->has('madre') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre de la madre" value="{{ old('madre', $fichaMedicaN->madre) }}">
                 </div>
               </div>
             </div>
@@ -120,7 +121,7 @@
               <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                   <label for="referido">Referido por:</label>
-                  <input type="text" name="referido" id="referido" class="form-control form-control-alternative{{ $errors->has('referido') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre de la persona que lo refirio" value="{{ old('referido') }}">
+                  <input type="text" name="referido" id="referido" class="form-control form-control-alternative{{ $errors->has('referido') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el nombre de la persona que lo refirio" value="{{ old('referido', $fichaMedicaN->referido) }}">
                 </div>
               </div>
             </div>
@@ -134,7 +135,7 @@
                       @foreach ($municipios as $municipio)
                           <option style="color: black;"
                           value="{{ $municipio->id }}"
-                          {{ ($municipio->id == old('municipio_id')) ? 'selected' : '' }}>{{ $municipio->nombreCompleto() }}</option>
+                          {{ ($municipio->id == old('municipio_id', $fichaMedicaN->municipio_id)) ? 'selected' : '' }}>{{ $municipio->nombreCompleto() }}</option>
                       @endforeach
                   </select>
                 </div>
@@ -142,7 +143,7 @@
               <div class="col-xs-12 col-sm-12 col-md-9">
                 <div class="form-group">
                   <label for="lugar_nacimiento">Lugar de nacimiento</label>
-                  <input type="text" name="lugar_nacimiento" id="lugar_nacimiento" class="form-control form-control-alternative{{ $errors->has('lugar_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el lugar de nacimiento" value="{{ old('lugar_nacimiento') }}">
+                  <input type="text" name="lugar_nacimiento" id="lugar_nacimiento" class="form-control form-control-alternative{{ $errors->has('lugar_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el lugar de nacimiento" value="{{ old('lugar_nacimiento', $fichaMedicaN->lugar_nacimiento) }}">
                 </div>
               </div>
             </div>
@@ -150,7 +151,7 @@
               <div class="col-xs-12 col-sm-12 col-md-4">
                 <div class="form-group">
                   <label for="email">Correo electrónico</label>
-                  <input type="text" name="email" id="email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el correo electrónico de contacto" value="{{ old('email') }}">
+                  <input type="text" name="email" id="email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el correo electrónico de contacto" value="{{ old('email', $fichaMedicaN->email) }}">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-2">
@@ -162,7 +163,7 @@
                       @foreach ($partos as $parto)
                           <option style="color: black;"
                           value="{{ $parto->id }}"
-                          {{ ($parto->id == old('parto_id')) ? 'selected' : '' }}>{{ $parto->nombre}}</option>
+                          {{ ($parto->id == old('parto_id', $fichaMedicaN->parto_id)) ? 'selected' : '' }}>{{ $parto->nombre}}</option>
                       @endforeach
                   </select>
                 </div>
@@ -176,29 +177,9 @@
                       @foreach ($alimentaciones as $alimentacion)
                           <option style="color: black;"
                           value="{{ $alimentacion->id }}"
-                          {{ ($alimentacion->id == old('alimentacion_id')) ? 'selected' : '' }}>{{ $alimentacion->nombre}}</option>
+                          {{ ($alimentacion->id == old('alimentacion_id', $fichaMedicaN->alimentacion_id)) ? 'selected' : '' }}>{{ $alimentacion->nombre}}</option>
                       @endforeach
                   </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-2">
-                <div class="form-group">
-                  <label for="telefono_uno">Teléfono 1</label>
-                  <input type="text" name="telefono_uno" id="telefono_uno" class="form-control form-control-alternative{{ $errors->has('telefono_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Número de teléfono" value="{{ old('telefono_uno') }}">
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2">
-                <div class="form-group">
-                  <label for="telefono_dos">Teléfono 2</label>
-                  <input type="text" name="telefono_dos" id="telefono_dos" class="form-control form-control-alternative{{ $errors->has('telefono_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Número de teléfono" value="{{ old('telefono_dos') }}">
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2">
-                <div class="form-group">
-                  <label for="telefono_tres">Teléfono 3</label>
-                  <input type="text" name="telefono_tres" id="telefono_tres" class="form-control form-control-alternative{{ $errors->has('telefono_tres') ? ' is-invalid' : '' }} input-sm" placeholder="Número de teléfono" value="{{ old('telefono_tres') }}">
                 </div>
               </div>
             </div>

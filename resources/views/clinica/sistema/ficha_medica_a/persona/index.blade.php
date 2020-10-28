@@ -62,7 +62,7 @@
                     <div class="card card-primary card-outline">
                       <div class="card-body box-profile">
                         <div class="text-center">
-                          <img class="profile-user-img img-fluid img-circle" src="{{ asset('img/user.png') }}" alt="User profile picture">
+                          <img class="profile-user-img img-circle" width="100" height="100" src="{{ is_null($value->foto) ? asset('img/user.png') : asset('storage/foto_fma/'.$value->foto) }}" alt="{{ $value->persona->nombreCompleto() }}">
                         </div>
 
                         <h3 class="profile-username text-center">{{ $value->persona->nombreCompleto() }}</h3>
@@ -72,10 +72,10 @@
 
                         <ul class="list-group list-group-unbordered mb-3">
                           <li class="list-group-item">
-                            <b>Parto</b> <a class="float-right">{{ $value->fichaMedicaA->profesion }}</a>
+                            <b>Profesión</b> <a class="float-right">{{ $value->profesion }}</a>
                           </li>
                           <li class="list-group-item">
-                            <b>Alimentación</b> <a class="float-right">{{ $value->tipoSangre->nombre }}</a>
+                            <b>Tipo de Sangre</b> <a class="float-right">{{ $value->tipo_sangre->nombre }}</a>
                           </li>
                           <li class="list-group-item">
                             <b>Edad</b> <a class="float-right">{{ "{$value->persona->edadPersona()} años" }}</a>
@@ -88,6 +88,7 @@
                         <div class="text-right">
                           <form action="{{ route('fichaMedicaA.destroy', $value) }}" method="post">
                             <a class="btn btn-sm btn-warning" href="{{ route('fichaMedicaA.edit', $value) }}" ><i class="fas fa-pencil-alt"></i> Editar</a>
+                            <a class="btn btn-sm btn-info" href="{{ route('historialFMA.show', $value->id) }}" ><i class="fas fa-eye"></i> Historial</a>
                             {{csrf_field()}}
                             <input name="_method" type="hidden" value="DELETE">
                             <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Eliminar</button>

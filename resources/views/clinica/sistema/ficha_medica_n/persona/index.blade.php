@@ -88,6 +88,7 @@
                         <div class="text-right">
                           <form action="{{ route('fichaMedicaN.destroy', $value) }}" method="post">
                             <a class="btn btn-sm btn-warning" href="{{ route('fichaMedicaN.edit', $value) }}" ><i class="fas fa-pencil-alt"></i> Editar</a>
+                            <a class="btn btn-sm btn-success" href="{{ route('historialFMN.show', $value) }}" ><i class="fas fa-eye"></i> Fichas</a>
                             {{csrf_field()}}
                             <input name="_method" type="hidden" value="DELETE">
                             <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Eliminar</button>

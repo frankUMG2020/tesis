@@ -2,7 +2,7 @@
 
 namespace App\Models\clinica\sistema;
 
-use App\Models\clinica\catalogo\Alimentacion;
+use Illuminate\Support\Facades\DB;
 use App\Models\clinica\catalogo\Parto;
 use App\Models\clinica\sistema\Persona;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +10,7 @@ use App\Models\clinica\catalogo\Municipio;
 use App\Models\clinica\sistema\TelefonoFMN;
 use App\Models\clinica\sistema\DireccionFMA;
 use App\Models\clinica\sistema\HistorialFMN;
+use App\Models\clinica\catalogo\Alimentacion;
 use App\Models\clinica\sistema\CalendarioFMA;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -43,6 +44,21 @@ class FichaMedicaN extends Model
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
+    }
+
+    public function scopeBuscar($query, $nombres)
+    {
+        if ($nombres) {
+            return $query->where('persona_id', DB::RAW("(SELECT id FROM persona 
+            WHERE nombre_uno LIKE '%$nombres%'
+            OR nombre_dos LIKE '%$nombres%'
+            OR apellido_uno LIKE '%$nombres%'
+            OR apellido_dos LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',nombre_dos) LIKE '%$nombres%'
+            OR CONCAT(apellido_uno,' ',apellido_dos) LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',apellido_uno) LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',nombre_dos,' ',apellido_uno,' ',apellido_dos) LIKE '%$nombres%')"));
+        }
     }
     
     public function persona()

@@ -18,9 +18,9 @@ class HistorialFMA extends Model
         'temperatura','p_a','respiracion','so_dos','ficha_medica_a_id'
     ];
 
-    public function parametros()
+    public function parametro()
     {
-        return $this->hasMany(ParametroFMA::class, 'historial_fma_id', 'id');
+        return $this->hasOne(ParametroFMA::class, 'historial_fma_id', 'id');
     }
 
     public function anexos_fma()

@@ -2,25 +2,16 @@
 
 namespace App\Models\clinica\sistema;
 
-use App\Models\clinica\catalogo\TipoSangre;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Models\clinica\catalogo\TipoSangre;
 
 class FichaMedicaA extends Model
 {
-    use SearchableTrait;
-
     const Soltero = 'Soltero';
     const Casado = 'Casado';
     const Viudo = 'Viudo';
     const Divorciado = 'Divorciado';
-
-    protected $searchable = [
-        'columns' => [
-            'departamento.codigo_epps' => 15,
-            'departamento.cui' => 10,
-        ]
-    ];
 
     protected $table = 'ficha_medica_a';
     /**
@@ -34,6 +25,21 @@ class FichaMedicaA extends Model
         'remitido', 'observacion', 'codigo_epps', 'cui',
         'tipo_sangre_id', 'persona_id'
     ];
+
+    public function scopeBuscar($query, $nombres)
+    {
+        if ($nombres) {
+            return $query->where('persona_id', DB::RAW("(SELECT id FROM persona 
+            WHERE nombre_uno LIKE '%$nombres%'
+            OR nombre_dos LIKE '%$nombres%'
+            OR apellido_uno LIKE '%$nombres%'
+            OR apellido_dos LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',nombre_dos) LIKE '%$nombres%'
+            OR CONCAT(apellido_uno,' ',apellido_dos) LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',apellido_uno) LIKE '%$nombres%'
+            OR CONCAT(nombre_uno,' ',nombre_dos,' ',apellido_uno,' ',apellido_dos) LIKE '%$nombres%')"));
+        }
+    }
 
     public function fechaFormato()
     {

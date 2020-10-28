@@ -241,10 +241,6 @@ return [
             'icon'    => 'fas fa-fw fa-laptop',
             'submenu' => [
                 [
-                    'text' => 'Ficha Médica Niño',
-                    'url'  => 'fichaMedicaN',
-                ],
-                [
                     'text' => 'Ficha Médica Adulto',
                     'url'  => 'fichaMedicaA',
                 ]

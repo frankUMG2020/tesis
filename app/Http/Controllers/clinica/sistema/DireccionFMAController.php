@@ -15,9 +15,7 @@ class DireccionFMAController extends Controller
      */
     public function index()
     {
-        $values = DireccionFMA::with('municipio')->get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        //
     }
 
     /**
@@ -38,13 +36,7 @@ class DireccionFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new DireccionFMA();
-        $insert->direccion = $request->direccion;
-        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $insert->municipio_id = $request->municipio_id;
-        $insert->save();
-
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+        //
     }
 
     /**
@@ -78,12 +70,7 @@ class DireccionFMAController extends Controller
      */
     public function update(Request $request, DireccionFMA $direccionFMA)
     {
-        $direccionFMA->direccion = $request->direccion;
-        $direccionFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $direccionFMA->municipio_id = $request->municipio_id;
-        $direccionFMA->save();
-
-        return response()->json(["Registro" => $direccionFMA, "Mensaje" => "Felicidades actualizaste"]);
+        //
     }
 
     /**
@@ -94,8 +81,6 @@ class DireccionFMAController extends Controller
      */
     public function destroy(DireccionFMA $direccionFMA)
     {
-        $direccionFMA->delete();
-
-        return response()->json(["Registro" => $direccionFMA, "Mensaje" => "Felicidades eliminaste"]);
+        //
     }
 }

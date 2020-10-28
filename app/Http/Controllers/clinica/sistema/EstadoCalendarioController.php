@@ -22,7 +22,7 @@ class EstadoCalendarioController extends Controller
             else
                 $values = EstadoCalendario::paginate(10);
 
-            return view('clinica.catalogo.estadoCalendario.index', ['values' => $values]);
+            return view('clinica.catalogo.estado_calendario.index', ['values' => $values]);
         } catch (\Exception $th) {
             if ($th instanceof QueryException) {
                 return redirect()->route('home')->with('danger', 'Error de base de datos');
@@ -40,7 +40,7 @@ class EstadoCalendarioController extends Controller
     public function create()
     {
         try {
-            return view('clinica.catalogo.estadoCalendario.create');
+            return view('clinica.catalogo.estado_calendario.create');
         } catch (\Exception $th) {
             if ($th instanceof QueryException) {
                 return redirect()->route('home')->with('danger', 'Error de base de datos');
@@ -107,7 +107,7 @@ class EstadoCalendarioController extends Controller
     public function edit(EstadoCalendario $estadoCalendario)
     {
         try {
-            return view('clinica.catalogo.estadoCalendario.edit', compact('estadoCalendario'));
+            return view('clinica.catalogo.estado_calendario.edit', compact('estadoCalendario'));
         } catch (\Exception $th) {
             if ($th instanceof QueryException) {
                 return redirect()->route('home')->with('danger', 'Error de base de datos');
