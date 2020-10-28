@@ -84,7 +84,7 @@ class FichaMedicaAController extends Controller
                 'remitido' => 'nullable|max:100',
                 'observacion' => 'nullable|max:200',
                 'codigo_epps' => 'nullable|max:20',
-                'cui' => 'required|max:100',
+                'cui' => 'nullable|digits_between:13,13',
                 'tipo_sangre_id' => 'required|integer|exists:tipo_sangre,id',
                 'municipio_id' => 'required|integer|exists:municipio,id',
                 'direccion' => 'required|max:200',
