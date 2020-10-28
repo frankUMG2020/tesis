@@ -5,7 +5,6 @@ namespace App\Http\Controllers\clinica\sistema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use App\Models\clinica\sistema\Persona;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +32,7 @@ class FichaMedicaAController extends Controller
             return view('clinica.sistema.ficha_medica_a.persona.index', ['values' => $values]);
         } catch (\Exception $th) {
             if ($th instanceof QueryException) {
-                return redirect()->route('home')->with('danger', 'Error de base de datos');
+                return redirect()->route('home')->with('danger', $th->getMessage());
             } else {
                 return redirect()->route('home')->with('danger', $th->getMessage());
             }
@@ -152,7 +151,7 @@ class FichaMedicaAController extends Controller
             if (!is_null($request->telefono_tres)) {
                 $telefono = new TelefonoFMA();
                 $telefono->numero = $request->telefono_tres;
-                $telefono->ficha_medica_n_id = $ficha->id;
+                $telefono->ficha_medica_a_id = $ficha->id;
                 $telefono->save();
             }
 

@@ -37,7 +37,9 @@ class FichaMedicaA extends Model
             OR CONCAT(nombre_uno,' ',nombre_dos) LIKE '%$nombres%'
             OR CONCAT(apellido_uno,' ',apellido_dos) LIKE '%$nombres%'
             OR CONCAT(nombre_uno,' ',apellido_uno) LIKE '%$nombres%'
-            OR CONCAT(nombre_uno,' ',nombre_dos,' ',apellido_uno,' ',apellido_dos) LIKE '%$nombres%')"));
+            OR CONCAT(nombre_uno,' ',nombre_dos,' ',apellido_uno,' ',apellido_dos) LIKE '%$nombres%'
+            ORDER BY id DESC
+            LIMIT 1)"));
         }
     }
 

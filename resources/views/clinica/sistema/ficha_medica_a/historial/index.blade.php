@@ -82,14 +82,14 @@
         <p class="text-muted">{{ $historialFMA->tipo_sangre->nombre }}</p>
         <hr>
 
-        <strong><i class="fas fa-book mr-1"></i> Teléfono</strong> <a class="btn btn-xs btn-success pull-right" href="#"><i class="fas fa-plus"></i></a>
+        <strong><i class="fas fa-book mr-1"></i> Teléfono</strong> <a class="btn btn-xs btn-success pull-right" href="{{ route('telefonoFMA.show', $historialFMA->id) }}"><i class="fas fa-plus"></i></a>
         @foreach ($historialFMA->telefonos as $item)
-          <p class="text-muted">{{ $item->numero }}<a class="btn btn-xs" href="#" style="color: red"><i class="fas fa-trash ml-3"></i></a> </p> 
+          <p class="text-muted">{{ $item->numero }}<a class="btn btn-xs" href="{{ route('telefonoFMA.edit', $item->id) }}" style="color: red"><i class="fas fa-trash ml-3"></i></a> </p> 
         @endforeach
         <hr>
-        <strong><i class="fas fa-map-marker-alt mr-1"></i> Dirección </strong> <a class="btn btn-xs btn-success pull-right" href="#"><i class="fas fa-plus"></i></a>
+        <strong><i class="fas fa-map-marker-alt mr-1"></i> Dirección </strong> <a class="btn btn-xs btn-success pull-right" href="{{ route('direccionFMA.show', $historialFMA->id) }}"><i class="fas fa-plus"></i></a>
         @foreach ($historialFMA->direcciones as $item)
-          <p class="text-muted">{{ $item->municipio->nombreCompleto() . ", " . $item->direccion }}<a class="btn btn-xs" href="#" style="color: red"><i class="fas fa-trash ml-3"></i></a> </p>  
+          <p class="text-muted">{{ $item->municipio->nombreCompleto() . ", " . $item->direccion }}<a class="btn btn-xs" href="{{ route('direccionFMA.edit', $item->id) }}" style="color: red"><i class="fas fa-trash ml-3"></i></a> </p>  
         @endforeach
 
         <hr>

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\DireccionFMA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\Municipio;
+use App\Models\clinica\sistema\DireccionFMA;
+use App\Models\clinica\sistema\FichaMedicaA;
 
 class DireccionFMAController extends Controller
 {
@@ -36,18 +40,55 @@ class DireccionFMAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
+                'municipio_id' => 'required|integer|exists:municipio,id',
+                'direccion' => 'required|max:200',
+            ]
+        );
+
+        try {
+            DB::beginTransaction();
+
+            $direccion = new DireccionFMA();
+            $direccion->direccion = $request->direccion;
+            $direccion->municipio_id = $request->municipio_id;
+            $direccion->ficha_medica_a_id = $request->ficha_medica_a_id;
+            $direccion->save();
+
+            DB::commit();
+
+            return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\clinica\sistema\DireccionFMA  $direccionFMA
+     * @param  \App\Models\clinica\sistema\FichaMedicaA  $direccionFMA
      * @return \Illuminate\Http\Response
      */
-    public function show(DireccionFMA $direccionFMA)
+    public function show(FichaMedicaA $direccionFMA)
     {
-        //
+        try {
+            $municipios = Municipio::all();
+
+            return view('clinica.sistema.ficha_medica_a.direccion.create', compact('direccionFMA', 'municipios'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        } 
     }
 
     /**
@@ -58,7 +99,21 @@ class DireccionFMAController extends Controller
      */
     public function edit(DireccionFMA $direccionFMA)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $direccionFMA->delete();
+
+            DB::commit();
+
+            return redirect()->route('historialFMA.show', $direccionFMA->ficha_medica_a_id)->with('success', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('historialFMA.show', $direccionFMA->ficha_medica_a_id)->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('historialFMA.show', $direccionFMA->ficha_medica_a_id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**

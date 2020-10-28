@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\TelefonoFMA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\sistema\TelefonoFMA;
+use App\Models\clinica\sistema\FichaMedicaA;
 
 class TelefonoFMAController extends Controller
 {
@@ -15,9 +18,7 @@ class TelefonoFMAController extends Controller
      */
     public function index()
     {
-        $values = TelefonoFMA::get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        //
     }
 
     /**
@@ -38,23 +39,51 @@ class TelefonoFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new TelefonoFMA();
-        $insert->numero = $request->numero;
-        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $insert->save();
+        $this->validate(
+            $request,
+            [
+                'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
+                'numero' => 'nullable|digits_between:8,8'
+            ]
+        );
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades insertaste"]);
+        try {
+            DB::beginTransaction();
+
+            $telefono = new TelefonoFMA();
+            $telefono->numero = $request->numero;
+            $telefono->ficha_medica_a_id = $request->ficha_medica_a_id;
+            $telefono->save();
+
+            DB::commit();
+
+            return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('historialFMA.show', $request->ficha_medica_a_id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\clinica\sistema\TelefonoFMA  $telefonoFMA
+     * @param  \App\Models\clinica\sistema\FichaMedicaA  $telefonoFMA
      * @return \Illuminate\Http\Response
      */
-    public function show(TelefonoFMA $telefonoFMA)
+    public function show(FichaMedicaA $telefonoFMA)
     {
-        //
+        try {
+            return view('clinica.sistema.ficha_medica_a.telefono.create', compact('telefonoFMA'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }       
     }
 
     /**
@@ -65,7 +94,21 @@ class TelefonoFMAController extends Controller
      */
     public function edit(TelefonoFMA $telefonoFMA)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $telefonoFMA->delete();
+
+            DB::commit();
+
+            return redirect()->route('historialFMA.show', $telefonoFMA->ficha_medica_a_id)->with('success', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('historialFMA.show', $telefonoFMA->ficha_medica_a_id)->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('historialFMA.show', $telefonoFMA->ficha_medica_a_id)->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -77,11 +120,7 @@ class TelefonoFMAController extends Controller
      */
     public function update(Request $request, TelefonoFMA $telefonoFMA)
     {
-        $telefonoFMA->numero = $request->numero;
-        $telefonoFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $telefonoFMA->save();
-
-        return response()->json(["Registro" => $telefonoFMA, "Mensaje" => "Felicidades Actualizaste"]);
+        //
     }
 
     /**
@@ -92,8 +131,6 @@ class TelefonoFMAController extends Controller
      */
     public function destroy(TelefonoFMA $telefonoFMA)
     {
-        $telefonoFMA->delete();
-
-        return response()->json(["Registro" => $telefonoFMA, "Mensaje" => "Felicidades Eliminaste"]);
+        //
     }
 }
