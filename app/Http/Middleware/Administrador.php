@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\escuela\seguridad\Rol;
+use App\Models\clinica\seguridad\Rol;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 

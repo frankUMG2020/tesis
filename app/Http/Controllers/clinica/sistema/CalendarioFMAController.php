@@ -14,6 +14,19 @@ use App\Models\clinica\sistema\EstadoCalendario;
 class CalendarioFMAController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        //$this->middleware('administrador');
+        //$this->middleware('medico');
+        //$this->middleware('secretaria');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

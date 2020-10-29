@@ -10,6 +10,19 @@ use Illuminate\Http\Request;
 class AlimentacionController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        //$this->middleware('administrador');
+        //$this->middleware('medico');
+        $this->middleware('secretaria')->only('destroy');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -87,15 +100,7 @@ class AlimentacionController extends Controller
      */
     public function show(Alimentacion $alimentacion)
     {
-        try {
-            
-        } catch (\Exception $th) {
-            if ($th instanceof QueryException) {
-                return redirect()->route('home')->with('danger', 'Error de base de datos');
-            } else {
-                return redirect()->route('home')->with('danger', $th->getMessage());
-            }
-        }
+        //
     }
 
     /**

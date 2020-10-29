@@ -11,6 +11,19 @@ use Illuminate\Database\QueryException;
 class PerfilController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        //$this->middleware('administrador');
+        //$this->middleware('medico');
+        $this->middleware('secretaria')->only('destroy');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
