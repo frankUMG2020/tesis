@@ -45,7 +45,7 @@ Route::resource('calendarioFMA', 'clinica\sistema\CalendarioFMAController')->exc
 Route::resource('direccionFMA', 'clinica\sistema\DireccionFMAController')->except('index','create','update','destroy');
 Route::resource('fichaMedicaA', 'clinica\sistema\FichaMedicaAController')->except('show');
 Route::resource('historialFMA', 'clinica\sistema\HistorialFMAController')->except('index','create','edit');
-Route::name('historialFMA.create_historial')->get('create/historialFMA/{ficha_medica_a_id}', 'clinica\sistema\historialFMAController@create_historial');
+Route::name('historialFMA.create_historial')->get('create/historialFMA/{ficha_medica_a_id}', 'clinica\sistema\HistorialFMAController@create_historial');
 Route::resource('telefonoFMA', 'clinica\sistema\TelefonoFMAController')->except('index','create','update','destroy');
 
 Route::name('reporte.ficha_medica')->get('reporte/ficha_medica/{ficha}', 'ReporteController@ficha_medica');
