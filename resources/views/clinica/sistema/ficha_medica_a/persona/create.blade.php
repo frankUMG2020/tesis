@@ -237,10 +237,14 @@
   </div>
   <script type="text/javascript">
       $('#fecha').datepicker({  
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        startDate: new Date(2020, 1, 1),
+        endDate: new Date()
       });  
       $('#fecha_nacimiento').datepicker({  
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        startDate: new Date(1970, 1, 1),
+        endDate: new Date()
       });  
   </script> 
 @endsection

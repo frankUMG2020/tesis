@@ -48,7 +48,7 @@
           events : [
               @foreach($data as $calendario)
               {
-                  title : '{{ $calendario->cita }}',
+                  title : '{{ $calendario->cita." Hora: ".$calendario->hora }}',
                   start : '{{ $calendario->fecha }}',
                   @if($calendario->estado_calendario_id == 1)
                     url : '{{ route('calendarioFMA.edit', $calendario) }}', 

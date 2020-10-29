@@ -108,7 +108,8 @@
   </div>
   <script type="text/javascript">
       $('#fecha').datepicker({  
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        startDate: new Date()
       });  
       
 

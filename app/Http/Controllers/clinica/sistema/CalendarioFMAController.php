@@ -79,7 +79,7 @@ class CalendarioFMAController extends Controller
             $request,
             [
                 'cita' => 'required|max:75',
-                'fecha' => 'required|date_format:d-m-Y',
+                'fecha' => 'required|date_format:d-m-Y|after_or_equal:' . date('d-m-Y'),
                 'hora' => 'required|date_format:H:i:s',
                 'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
                 'tipo_cita_id' => 'required|integer|exists:tipo_cita,id'
@@ -157,7 +157,7 @@ class CalendarioFMAController extends Controller
             $request,
             [
                 'cita' => 'required|max:75',
-                'fecha' => 'required|date_format:d-m-Y',
+                'fecha' => 'required|date_format:d-m-Y|after_or_equal:' . date('d-m-Y'),
                 'hora' => 'required|date_format:H:i:s',
                 'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
                 'tipo_cita_id' => 'required|integer|exists:tipo_cita,id',
