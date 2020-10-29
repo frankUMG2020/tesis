@@ -53,25 +53,25 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3">
                   <div class="form-group">
-                    <label for="nombre_uno">Primer nombre del paciente</label>
+                    <label for="nombre_uno">Primer nombre del usuario</label>
                     <input type="text" name="nombre_uno" id="nombre_uno" class="form-control form-control-alternative{{ $errors->has('nombre_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer nombre" value="{{ old('nombre_uno', $persona->nombre_uno) }}">
                   </div>
                 </div>                
                 <div class="col-xs-12 col-sm-12 col-md-3">
                   <div class="form-group">
-                    <label for="nombre_dos">Segundo nombre del paciente</label>
+                    <label for="nombre_dos">Segundo nombre del usuario</label>
                     <input type="text" name="nombre_dos" id="nombre_dos" class="form-control form-control-alternative{{ $errors->has('nombre_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo nombre" value="{{ old('nombre_dos', $persona->nombre_dos) }}">
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                   <div class="form-group">
-                    <label for="apellido_uno">Primer apellido del paciente</label>
+                    <label for="apellido_uno">Primer apellido del usuario</label>
                     <input type="text" name="apellido_uno" id="apellido_uno" class="form-control form-control-alternative{{ $errors->has('apellido_uno') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el primer apellido" value="{{ old('apellido_uno', $persona->apellido_uno) }}">
                   </div>
                 </div>                
                 <div class="col-xs-12 col-sm-12 col-md-3">
                   <div class="form-group">
-                    <label for="apellido_dos">Segundo apellido del paciente</label>
+                    <label for="apellido_dos">Segundo apellido del usuario</label>
                     <input type="text" name="apellido_dos" id="apellido_dos" class="form-control form-control-alternative{{ $errors->has('apellido_dos') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir el segundo apellido" value="{{ old('apellido_dos', $persona->apellido_dos) }}">
                   </div>
                 </div>
@@ -79,7 +79,7 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3">
                   <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de Nacimiento del Paciente</label>
+                    <label for="fecha_nacimiento">Fecha de Nacimiento del Usuario</label>
                     <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-alternative{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }} input-sm" placeholder="Escribir la fecha de nacimiento del paciente" value="{{ old('fecha_nacimiento', $persona->fechaFormato()) }}">
                   </div>
                 </div>
