@@ -16,9 +16,7 @@ class AnexoFMAController extends Controller
      */
     public function index()
     {
-        $values = AnexoFMA::get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        //
     }
 
     /**
@@ -39,17 +37,7 @@ class AnexoFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new AnexoFMA();
-        $insert->nombre = $request->nombre;
-
-        $image = $request->file('path');
-        $nueva = Storage::disk('anexo_fma')->put('/', $image);
-        $insert->path = $nueva;
-        
-        $insert->historial_fma_id = $request->historial_fma_id;
-        $insert->save();
-
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
+        //
     }
 
     /**
@@ -83,16 +71,7 @@ class AnexoFMAController extends Controller
      */
     public function update(Request $request, AnexoFMA $anexoFMA)
     {
-        $anexoFMA->nombre = $request->nombre;
-
-        $image = $request->file('path');
-        $nueva = Storage::disk('anexo_fmn')->put('/', $image);
-        $anexoFMA->path = $nueva;
-
-        $anexoFMA->historial_fma_id = $request->path;
-        $anexoFMA->save();
-
-        return response()->json(["Registro" => $anexoFMA, "Mensaje" => "Felicidades Actualizaste"]);
+        //
     }
 
     /**
@@ -103,8 +82,6 @@ class AnexoFMAController extends Controller
      */
     public function destroy(AnexoFMA $anexoFMA)
     {
-        $anexoFMA->delete();
-
-        return response()->json(["Registro" => $anexoFMA, "Mensaje" => "Felicidades Eliminaste"]);
+        //
     }
 }

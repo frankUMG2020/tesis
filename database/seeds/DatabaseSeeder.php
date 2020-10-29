@@ -14,6 +14,7 @@ use App\Models\clinica\catalogo\TipoSangre;
 use App\Models\clinica\catalogo\Vacuna;
 use App\Models\clinica\seguridad\Rol;
 use App\Models\clinica\seguridad\Usuario;
+use App\Models\clinica\sistema\EstadoCalendario;
 use App\Models\clinica\sistema\Persona;
 
 class DatabaseSeeder extends Seeder
@@ -87,6 +88,18 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        $insert = new EstadoCalendario();
+        $insert->nombre = 'Activo';
+        $insert->save();
+
+        $insert = new EstadoCalendario();
+        $insert->nombre = 'Suspendido';
+        $insert->save();
+
+        $insert = new EstadoCalendario();
+        $insert->nombre = 'Asistio';
+        $insert->save();
+
         $parto = new Parto();
         $parto->nombre = 'Normal';
         $parto->save();
@@ -118,7 +131,7 @@ class DatabaseSeeder extends Seeder
         $tipo_sangre->nombre = 'O-';
         $tipo_sangre->save();
 
-        for ($i=0; $i < 20; $i++) { 
+        for ($i=0; $i < 12; $i++) { 
             $vacuna = new Vacuna();
             $vacuna->nombre = "Vacuna {$i}";
             $vacuna->dosis = random_int(1,10);

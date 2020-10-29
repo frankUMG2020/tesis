@@ -15,9 +15,7 @@ class ETFMAController extends Controller
      */
     public function index()
     {
-        $values = ETFMA::get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        //
     }
 
     /**
@@ -38,13 +36,7 @@ class ETFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new ETFMA();
-        $insert->evolucion = $request->evolucion;
-        $insert->tratamiento = $request->tratamiento;
-        $insert->parametros_fma_id = $request->parametros_fma_id;
-        $insert->save();
-
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
+        //
     }
 
     /**
@@ -78,12 +70,7 @@ class ETFMAController extends Controller
      */
     public function update(Request $request, ETFMA $eTFMA)
     {
-        $eTFMA->evolucion = $request->evolucion;
-        $eTFMA->tratamiento = $request->tratamiento;
-        $eTFMA->parametros_fma_id = $request->parametros_fma_id;
-        $eTFMA->save();
-
-        return response()->json(["Registro" => $eTFMA, "Mensaje" => "Felicidades Actualizaste"]);
+        //
     }
 
     /**
@@ -94,8 +81,6 @@ class ETFMAController extends Controller
      */
     public function destroy(ETFMA $eTFMA)
     {
-        $eTFMA->delete();
-
-        return response()->json(["Registro" => $eTFMA, "Mensaje" => "Felicidades Eliminaste"]);
+        //
     }
 }

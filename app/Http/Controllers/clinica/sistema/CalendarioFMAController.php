@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\clinica\sistema;
 
-use App\Http\Controllers\Controller;
-use App\Models\clinica\sistema\CalendarioFMA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\clinica\catalogo\TipoCita;
+use App\Models\clinica\sistema\FichaMedicaA;
+use App\Models\clinica\sistema\CalendarioFMA;
+use App\Models\clinica\sistema\EstadoCalendario;
 
 class CalendarioFMAController extends Controller
 {
@@ -15,9 +20,17 @@ class CalendarioFMAController extends Controller
      */
     public function index()
     {
-        $values = CalendarioFMA::get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        try {
+            $values = CalendarioFMA::orderByDesc('created_at')->paginate(12);
+            
+            return view('clinica.sistema.calendario.index', ['values' => $values]);
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('home')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -27,7 +40,18 @@ class CalendarioFMAController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $pacientes = FichaMedicaA::all();
+            $tipos = TipoCita::all();
+
+            return view('clinica.sistema.calendario.create', compact('pacientes', 'tipos'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('calendarioFMA.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -38,16 +62,39 @@ class CalendarioFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new CalendarioFMA();
-        $insert->cita = $request->cita;
-        $insert->fecha =date('Y-m-d', strtotime($request->fecha));
-        $insert->hora = $request->hora;
-        $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $insert->estado_calendario_id = $request->estado_calendario_id;
-        $insert->tipo_cita_id = $request->tipo_cita_id;
-        $insert->save();
+        $this->validate(
+            $request,
+            [
+                'cita' => 'required|max:75',
+                'fecha' => 'required|date_format:d-m-Y',
+                'hora' => 'required|date_format:H:i:s',
+                'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
+                'tipo_cita_id' => 'required|integer|exists:tipo_cita,id'
+            ]
+        );
 
-        return response()->json(["Registro" => $insert, "Mensaje" => "Felicidades Insertaste"]);
+        try {
+            DB::beginTransaction();
+
+            $insert = new CalendarioFMA();
+            $insert->cita = $request->cita;
+            $insert->fecha = date('Y-m-d', strtotime($request->fecha));
+            $insert->hora = $request->hora;
+            $insert->ficha_medica_a_id = $request->ficha_medica_a_id;
+            $insert->tipo_cita_id = $request->tipo_cita_id;
+            $insert->estado_calendario_id = 1;
+            $insert->save();
+
+            DB::commit();
+
+            return redirect()->route('calendarioFMA.index')->with('success', '¡Registro creado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('calendarioFMA.create')->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('calendarioFMA.create')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -69,7 +116,19 @@ class CalendarioFMAController extends Controller
      */
     public function edit(CalendarioFMA $calendarioFMA)
     {
-        //
+        try {
+            $pacientes = FichaMedicaA::all();
+            $tipos = TipoCita::all();
+            $estados = EstadoCalendario::all();
+
+            return view('clinica.sistema.calendario.edit', compact('pacientes', 'tipos', 'calendarioFMA', 'estados'));
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('calendarioFMA.index')->with('danger', 'Error de base de datos');
+            } else {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -81,15 +140,43 @@ class CalendarioFMAController extends Controller
      */
     public function update(Request $request, CalendarioFMA $calendarioFMA)
     {
-        $calendarioFMA->cita = $request->cita;
-        $calendarioFMA->fecha =date('Y-m-d', strtotime($request->fecha));
-        $calendarioFMA->hora = $request->hora;
-        $calendarioFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
-        $calendarioFMA->estado_calendario_id = $request->estado_calendario_id;
-        $calendarioFMA->tipo_cita_id = $request->tipo_cita_id;
-        $calendarioFMA->save();
+        $this->validate(
+            $request,
+            [
+                'cita' => 'required|max:75',
+                'fecha' => 'required|date_format:d-m-Y',
+                'hora' => 'required|date_format:H:i:s',
+                'ficha_medica_a_id' => 'required|integer|exists:ficha_medica_a,id',
+                'tipo_cita_id' => 'required|integer|exists:tipo_cita,id',
+                'estado_calendario_id' => 'required|integer|exists:estado_calendario,id'
+            ]
+        );
 
-        return response()->json(["Registro" => $calendarioFMA, "Mensaje" => "Felicidades Insertaste"]);
+        try {
+            DB::beginTransaction();
+
+            $calendarioFMA->cita = $request->cita;
+            $calendarioFMA->fecha = date('Y-m-d', strtotime($request->fecha));
+            $calendarioFMA->hora = $request->hora;
+            $calendarioFMA->ficha_medica_a_id = $request->ficha_medica_a_id;
+            $calendarioFMA->tipo_cita_id = $request->tipo_cita_id;
+            $calendarioFMA->estado_calendario_id = $request->estado_calendario_id;
+
+            if (!$calendarioFMA->isDirty())
+                return redirect()->route('calendarioFMA.edit', $calendarioFMA->id)->with('warning', '¡No existe información nueva para actualizar!');
+
+            $calendarioFMA->save();
+
+            DB::commit();
+
+            return redirect()->route('calendarioFMA.index')->with('success', '¡Registro modificado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -100,8 +187,20 @@ class CalendarioFMAController extends Controller
      */
     public function destroy(CalendarioFMA $calendarioFMA)
     {
-        $calendarioFMA->delete();
+        try {
+            DB::beginTransaction();
 
-        return response()->json(["Registro" => $calendarioFMA, "Mensaje" => "Felicidades Eliminaste"]);
+            $calendarioFMA->delete();
+
+            DB::commit();
+
+            return redirect()->route('calendarioFMA.index')->with('success', '¡Registro eliminado satisfactoriamente!');
+        } catch (\Exception $th) {
+            if ($th instanceof QueryException) {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            } else {
+                return redirect()->route('calendarioFMA.index')->with('danger', $th->getMessage());
+            }
+        }
     }
 }

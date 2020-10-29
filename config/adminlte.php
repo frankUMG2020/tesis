@@ -243,6 +243,10 @@ return [
                 [
                     'text' => 'Ficha Médica Adulto',
                     'url'  => 'fichaMedicaA',
+                ],
+                [
+                    'text' => 'Calendario',
+                    'url'  => 'calendarioFMA',
                 ]
             ],
         ],

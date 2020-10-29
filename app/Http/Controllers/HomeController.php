@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\clinica\sistema\CalendarioFMA;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data = CalendarioFMA::all();
+        return view('home', compact('data'));
     }
 }

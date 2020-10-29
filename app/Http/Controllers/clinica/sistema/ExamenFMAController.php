@@ -15,9 +15,7 @@ class ExamenFMAController extends Controller
      */
     public function index()
     {
-        $values = ExamenFMA::get();
-
-        return response()->json(['Registro nuevo' => $values, 'Mensaje' => 'Felicidades consultastes']);
+        //
     }
 
     /**
@@ -38,12 +36,7 @@ class ExamenFMAController extends Controller
      */
     public function store(Request $request)
     {
-        $insert = new ExamenFMA();
-        $insert->historial_fma_id = $request->historial_fma_id;
-        $insert->examen_id = $request->examen_id;
-        $insert->save();
-
-        return response()->json(['Registro nuevo' => $insert, 'Mensaje' => 'Felicidades Insertaste']);
+        //
     }
 
     /**
@@ -77,11 +70,7 @@ class ExamenFMAController extends Controller
      */
     public function update(Request $request, ExamenFMA $examenFMA)
     {
-        $examenFMA->historial_fma_id = $request->historial_fma_id;
-        $examenFMA->examen_id = $request->examen_id;
-        $examenFMA->save();
-
-        return response()->json(['Registro nuevo' => $examenFMA, 'Mensaje' => 'Felicidades Actualizaste']);
+        //
     }
 
     /**
@@ -92,8 +81,6 @@ class ExamenFMAController extends Controller
      */
     public function destroy(ExamenFMA $examenFMA)
     {
-        $examenFMA->delete();
-
-        return response()->json(['Registro nuevo' => $examenFMA, 'Mensaje' => 'Felicidades Eliminaste']);
+        //
     }
 }
