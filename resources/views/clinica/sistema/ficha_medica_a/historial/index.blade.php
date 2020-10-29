@@ -127,6 +127,7 @@
               <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Eliminar el historial {{ $item->codigo }}</button>
             </form>
           </div>          
+          <hr>
           <form method="POST" action="{{ route('historialFMA.update', $item) }}"  role="form">
               {{ csrf_field() }}
               <input name="_method" type="hidden" value="PATCH">
@@ -134,32 +135,37 @@
               <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_uno">Titulo Puno</label>
+                          <label for="parametro_uno">1. Antecedentes Familiares, Personales, Patologicos, No Patologicos, Vacunaciones, Ginecobstetricos.</label>
                           <textarea class="form-control" name="parametro_uno" id="parametro_uno" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_uno }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_dos">Titulo Pdos</label>
+                          <label for="parametro_dos">2. Motivo de Consulta e Historia.</label>
                           <textarea class="form-control" name="parametro_dos" id="parametro_dos" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_dos }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_tres">Titulo Ptres</label>
+                          <label for="parametro_tres">3. Aparatos y Sistemas.</label>
                           <textarea class="form-control" name="parametro_tres" id="parametro_tres" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_tres }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_cuatro">Titulo Pcuatro</label>
+                          <label for="parametro_cuatro">4. Examenes y Medicación Previos.</label>
                           <textarea class="form-control" name="parametro_cuatro" id="parametro_cuatro" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_cuatro }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="row">
                           <div class="col-xs-12 col-sm-12 col-md-12">
-                              <label for="parametro_cinco">Titulo Pcinco</label>
+                              <center>
+                                  <label>Examen Físico</label>
+                              </center>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-12">
+                              <label for="parametro_cinco">5. Datos Generales.</label>
                           </div>
                           <div class="col-xs-12 col-sm-12 col-md-1 text-center">
                               <div class="form-group">
@@ -213,49 +219,49 @@
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_seis">Titulo Pseis</label>
+                          <label for="parametro_seis">6. Actitud, Piel.</label>
                           <textarea class="form-control" name="parametro_seis" id="parametro_seis" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_seis }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_siete">Titulo Psiete</label>
+                          <label for="parametro_siete">7. Craneo, Cara, Cuello, Garganta.</label>
                           <textarea class="form-control" name="parametro_siete" id="parametro_siete" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_uno }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_ocho">Titulo Pocho</label>
+                          <label for="parametro_ocho">8. Torax, Region Cardiaca, Aparato Respiratorio.</label>
                           <textarea class="form-control" name="parametro_ocho" id="parametro_ocho" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_ocho }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_nueve">Titulo Pnueve</label>
+                          <label for="parametro_nueve">9. Abdomen.</label>
                           <textarea class="form-control" name="parametro_nueve" id="" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_nueve }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_diez">Titulo Pdiez</label>
+                          <label for="parametro_diez">10. Genito-Urinario.</label>
                           <textarea class="form-control" name="parametro_diez" id="parametro_diez" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_diez }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_once">Titulo Ponce</label>
+                          <label for="parametro_once">11. Miembros.</label>
                           <textarea class="form-control" name="parametro_once" id="parametro_once" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_once }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_doce">Titulo Pdoce</label>
+                          <label for="parametro_doce">12. Sistema Nervioso.</label>
                           <textarea class="form-control" name="parametro_doce" id="parametro_doce" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_doce }}</textarea>
                       </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
-                          <label for="parametro_trece">Titulo Ptrece</label>
+                          <label for="parametro_trece">13. Ginecologico y/o Rectal.</label>
                           <textarea class="form-control" name="parametro_trece" id="parametro_trece" cols="15" placeholder="escribir la información en esta area" rows="5">{{ $item->parametro->parametro_trece }}</textarea>
                       </div>
                   </div>

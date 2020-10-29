@@ -110,17 +110,17 @@ class DatabaseSeeder extends Seeder
 
         $tipo_cita = new TipoCita();
         $tipo_cita->nombre = 'Normal';
-        $tipo_cita->color = 'success';
+        $tipo_cita->color = '#62bfa8';
         $tipo_cita->save();
 
         $tipo_cita = new TipoCita();
         $tipo_cita->nombre = 'Emergencia';
-        $tipo_cita->color = 'danger';
+        $tipo_cita->color = '#dc3545';
         $tipo_cita->save();
 
         $tipo_cita = new TipoCita();
         $tipo_cita->nombre = 'EPPS';
-        $tipo_cita->color = 'primary';
+        $tipo_cita->color = '#ffc107';
         $tipo_cita->save();
 
         $tipo_sangre = new TipoSangre();
