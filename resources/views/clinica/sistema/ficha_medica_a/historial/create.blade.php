@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label for="parametro_uno">1. Antecedentes Familiares, Personales, Patologicos, No Patologicos, Vacunaciones, Gineconsetricos.</label>
+                            <label for="parametro_uno">1. Antecedentes Familiares, Personales, Patologicos, No Patologicos, Vacunaciones, Ginecobstetricos.</label>
                             <textarea class="form-control" name="parametro_uno" id="parametro_uno" cols="15" placeholder="escribir la información en esta area" rows="5">{{ old('parametro_uno') }}</textarea>
                         </div>
                     </div>
