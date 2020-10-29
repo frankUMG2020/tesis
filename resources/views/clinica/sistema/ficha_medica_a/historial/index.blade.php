@@ -67,7 +67,7 @@
           </li>
         </ul>
 
-        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+        <a href="{{ route('reporte.ficha_medica', $historialFMA->id) }}" class="btn btn-primary btn-block"><b>Imprimir ficha clínica</b></a>
       </div>
   </div>
 
@@ -126,6 +126,8 @@
               <input name="_method" type="hidden" value="DELETE">
               <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Eliminar el historial {{ $item->codigo }}</button>
             </form>
+            <br>
+            <a href="{{ route('reporte.historial', $item->id) }}" class="btn btn-sm btn-primary">Imprimir historial {{ $item->codigo }}</a>
           </div>          
           <hr>
           <form method="POST" action="{{ route('historialFMA.update', $item) }}"  role="form">

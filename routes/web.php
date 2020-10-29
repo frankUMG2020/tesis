@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\clinica\sistema\FichaMedicaA;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +47,7 @@ Route::resource('fichaMedicaA', 'clinica\sistema\FichaMedicaAController')->excep
 Route::resource('historialFMA', 'clinica\sistema\HistorialFMAController')->except('index','create','edit');
 Route::name('historialFMA.create_historial')->get('create/historialFMA/{ficha_medica_a_id}', 'clinica\sistema\historialFMAController@create_historial');
 Route::resource('telefonoFMA', 'clinica\sistema\TelefonoFMAController')->except('index','create','update','destroy');
+
+Route::name('reporte.ficha_medica')->get('reporte/ficha_medica/{ficha}', 'ReporteController@ficha_medica');
+Route::name('reporte.historial')->get('reporte/historial/{paciente}', 'ReporteController@historial');
 ?>

@@ -103,14 +103,14 @@
                 <tr>
                     <td align="left" colspan="2">
                         <small>direcciones</small>
-                        @foreach ($ficha->direcciones as $item)
-                            <p style="text-decoration: underline;">{{ $item->municipio->nombreCompleto().', '.$item->direccion }}</p> 
+                        @foreach ($ficha->direcciones as $historial)
+                            <p style="text-decoration: underline;">{{ $historial->municipio->nombreCompleto().', '.$historial->direccion }}</p> 
                         @endforeach
                     </td>   
                     <td align="left">
                         <small>teléfonos</small>
-                        @foreach ($ficha->telefonos as $item)
-                            <p style="text-decoration: underline;">{{ $item->numero }}</p> 
+                        @foreach ($ficha->telefonos as $historial)
+                            <p style="text-decoration: underline;">{{ $historial->numero }}</p> 
                         @endforeach
                     </td>         
                 </tr>
@@ -129,17 +129,17 @@
             </tr>
         </table>
     </header>
-    @foreach ($ficha->historiales_fma as $item)
+    @foreach ($historiales as $historial)
         <table width="100%" border="1" cellspacing="1" cellpadding="1">
             <tr align="center">
-                <td colspan="2"><strong>anamnesis - código {{ $item->codigo }}</strong></td>
+                <td colspan="2"><strong>anamnesis - código {{ $historial->codigo }}</strong></td>
             </tr>             
             <tr>
                 <td>
                     <small>1) Ancedentes Familiares, Personales, Patológicos, No. Patológicos, Vacunaciones, Ginecolostétricos, etc...</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_uno !!}
+                    {!! $historial->parametro->parametro_uno !!}
                 </td>
             </tr>
             <tr>
@@ -147,7 +147,7 @@
                     <small>2) motivo de consulta e historia</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_dos !!}
+                    {!! $historial->parametro->parametro_dos !!}
                 </td>
             </tr>
             <tr>
@@ -155,7 +155,7 @@
                     <small>3) Aparatos y sistemas</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_tres !!}
+                    {!! $historial->parametro->parametro_tres !!}
                 </td>
             </tr>
             <tr>
@@ -163,7 +163,7 @@
                     <small>4) Exámenes y medicación previos</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_cuatro !!}
+                    {!! $historial->parametro->parametro_cuatro !!}
                 </td>
             </tr>
             <tr>
@@ -174,14 +174,14 @@
                     <h1><strong>examen fisico</strong></h1>
                     <table class="table_dos" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->edad }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->peso }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->talla }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->pulso }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->temperatura }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->p_a }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->respiracion }}</p></td>
-                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $item->so_dos }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->edad }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->peso }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->talla }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->pulso }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->temperatura }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->p_a }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->respiracion }}</p></td>
+                            <td class="des" align="center"><p style="text-decoration: underline;">{{ $historial->so_dos }}</p></td>
                         </tr>                        
                         <tr>
                             <td class="des" align="center">edad</td>
@@ -201,7 +201,7 @@
                     <small>6) Actitud, piel</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_seis !!}
+                    {!! $historial->parametro->parametro_seis !!}
                 </td>
             </tr>
             <tr>
@@ -209,7 +209,7 @@
                     <small>7) Craneo, cara, cuello, garganta</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_siete !!}
+                    {!! $historial->parametro->parametro_siete !!}
                 </td>
             </tr>
             <tr>
@@ -217,7 +217,7 @@
                     <small>8) Tórax región cardiaca</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_ocho !!}
+                    {!! $historial->parametro->parametro_ocho !!}
                 </td>
             </tr>
             <tr>
@@ -225,7 +225,7 @@
                     <small>9) Abdomen</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_nueve !!}
+                    {!! $historial->parametro->parametro_nueve !!}
                 </td>
             </tr>
             <tr>
@@ -233,7 +233,7 @@
                     <small>10) Genito urinario</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_diez !!}
+                    {!! $historial->parametro->parametro_diez !!}
                 </td>
             </tr>
             <tr>
@@ -241,7 +241,7 @@
                     <small>11) Miembros</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_once !!}
+                    {!! $historial->parametro->parametro_once !!}
                 </td>
             </tr>
             <tr>
@@ -249,7 +249,7 @@
                     <small>12) Sistema nervioso</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_once !!}
+                    {!! $historial->parametro->parametro_once !!}
                 </td>
             </tr>
             <tr>
@@ -257,7 +257,7 @@
                     <small>13) Ginecológico y/o rectal</small>
                 </td>
                 <td  class="des" align="left" width="80%">
-                    {!! $item->parametro->parametro_trece !!}
+                    {!! $historial->parametro->parametro_trece !!}
                 </td>
             </tr>
         </table>

@@ -22,7 +22,7 @@ class HistorialFMAController extends Controller
         $this->middleware('auth');
         //$this->middleware('administrador');
         //$this->middleware('medico');
-        //$this->middleware('secretaria')->only('destroy');
+        $this->middleware('secretaria')->only('destroy');
     }
 
     /**
