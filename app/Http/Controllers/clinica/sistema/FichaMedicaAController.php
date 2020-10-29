@@ -89,9 +89,9 @@ class FichaMedicaAController extends Controller
                 'apellido_uno' => 'required|max:20',
                 'apellido_dos' => 'max:30',
                 'sexo' => 'required|starts_with:'.Persona::Femenino.','.Persona::Masculino,
-                'fecha_nacimiento' => 'required|date_format:d-m-Y',
+                'fecha_nacimiento' => 'required|date_format:d-m-Y|before_or_equal:' . date('d-m-Y'),
 
-                'fecha' => 'required|date_format:d-m-Y',
+                'fecha' => 'required|date_format:d-m-Y|before_or_equal:' . date('d-m-Y'),
                 'estado_civil' => 'required|starts_with:'.FichaMedicaA::Soltero.','.FichaMedicaA::Casado.','.FichaMedicaA::Viudo.','.FichaMedicaA::Divorciado,
                 'profesion' => 'nullable|max:100',
                 'remitido' => 'nullable|max:100',
@@ -234,9 +234,9 @@ class FichaMedicaAController extends Controller
                 'apellido_uno' => 'required|max:20',
                 'apellido_dos' => 'max:30',
                 'sexo' => 'required_with:' . Persona::Femenino . ',' . Persona::Masculino,
-                'fecha_nacimiento' => 'required|date_format:d-m-Y',
+                'fecha_nacimiento' => 'required|date_format:d-m-Y|before_or_equal:' . date('d-m-Y'),
 
-                'fecha' => 'required|date_format:d-m-Y',
+                'fecha' => 'required|date_format:d-m-Y|before_or_equal:' . date('d-m-Y'),
                 'estado_civil' => 'required_with:' . FichaMedicaA::Soltero . ',' . FichaMedicaA::Casado . ',' . FichaMedicaA::Viudo . ',' . FichaMedicaA::Divorciado,
                 'profesion' => 'nullable|max:100',
                 'remitido' => 'nullable|max:100',

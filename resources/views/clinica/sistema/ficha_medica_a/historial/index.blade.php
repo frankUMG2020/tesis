@@ -39,7 +39,7 @@
   <div class="card card-primary card-outline">
       <div class="card-body box-profile">
         <div class="text-center">
-            <img class="profile-user-img img-fluid img-circle" src="{{ is_null($historialFMA->foto) ? asset('img/user.png') : asset('storage/foto_fma/'.$historialFMA->foto) }}" alt="User profile picture">
+            <img class="profile-user-img img-circle" width="100" height="100" src="{{ is_null($historialFMA->foto) ? asset('img/user.png') : asset('storage/foto_fma/'.$historialFMA->foto) }}" alt="User profile picture">
         </div>
 
         <h3 class="profile-username text-center">{{ $historialFMA->persona->nombreCompleto() }}</h3>
