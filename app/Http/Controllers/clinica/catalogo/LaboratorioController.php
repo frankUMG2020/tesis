@@ -105,14 +105,7 @@ class LaboratorioController extends Controller
      */
     public function show(Laboratorio $laboratorio)
     {
-        try {
-        } catch (\Exception $th) {
-            if ($th instanceof QueryException) {
-                return redirect()->route('home')->with('danger', 'Error de base de datos');
-            } else {
-                return redirect()->route('home')->with('danger', $th->getMessage());
-            }
-        }
+        //
     }
 
     /**

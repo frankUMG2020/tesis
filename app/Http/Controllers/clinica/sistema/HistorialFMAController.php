@@ -32,9 +32,7 @@ class HistorialFMAController extends Controller
      */
     public function index()
     {
-        $values = HistorialFMA::get();
-
-        return response()->json(["Registro" => $values, "Mensaje" => "Felicidades accediste a datos"]);
+        //
     }
 
     /**
