@@ -102,9 +102,9 @@ class HistorialFMAController extends Controller
 
                 $correlativo = is_null($generar) ? 1 : $generar->correlativo + 1;
                 if(!is_null($ficha->codigo_epps) && !empty($ficha->codigo_epps)) {
-                    $codigo = $ficha->codigo_epps .'-'. str_pad(strval($correlativo), 3, "0", STR_PAD_LEFT) . '-' . date('Y');
+                    $codigo = $ficha->codigo_epps . '-' . $request->ficha_medica_a_id .'-'. str_pad(strval($correlativo), 3, "0", STR_PAD_LEFT) . '-' . date('Y');
                 } else {
-                    $codigo = str_pad(strval($correlativo), 3, "0", STR_PAD_LEFT) . '-' . date('Y');
+                    $codigo = $request->ficha_medica_a_id . '-' . str_pad(strval($correlativo), 3, "0", STR_PAD_LEFT) . '-' . date('Y');
                 }
 
                 $historial = new HistorialFMA();
